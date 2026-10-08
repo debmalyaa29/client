@@ -103,6 +103,22 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Custom Cursor Rules for Fine Pointer Devices */
+@media (pointer: fine) {
+  body.custom-cursor-active {
+    cursor: none;
+  }
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active [role="button"] {
+    cursor: none;
+  }
+  body.custom-cursor-active input,
+  body.custom-cursor-active textarea {
+    cursor: auto;
+  }
+}
+
 /* Custom scrollbar for editorial elegance */
 ::-webkit-scrollbar {
   width: 6px;

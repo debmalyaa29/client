@@ -80,7 +80,7 @@ export default function ProductGallery({ onOpenInquiry, onExplore3D }: ProductGa
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               
               {/* Product Visual */}
-              <div className="md:col-span-6 relative h-[320px] rounded-xs bg-[#EFE7D8]/40 border border-[#25221D]/10 flex items-center justify-center p-6 overflow-hidden group">
+              <div data-cursor="explore" className="md:col-span-6 relative h-[320px] rounded-xs bg-[#EFE7D8]/40 border border-[#25221D]/10 flex items-center justify-center p-6 overflow-hidden group">
                 <div className="relative w-full h-full transition-transform duration-500 group-hover:scale-105">
                   <Image
                     src={selectedProduct.image}

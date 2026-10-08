@@ -299,6 +299,7 @@ export default function MachineryCanvas({
     <div className={`relative flex flex-col items-center justify-center ${className}`}>
       <div
         ref={mountRef}
+        data-cursor="drag"
         className="w-full h-full min-h-[380px] md:min-h-[480px] cursor-grab active:cursor-grabbing"
       />
       {/* Component Indicator HUD */}

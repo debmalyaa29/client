@@ -308,6 +308,7 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
     <div className={`relative flex items-center justify-center ${className}`}>
       <div
         ref={mountRef}
+        data-cursor="drag"
         className="w-full aspect-square max-w-[460px] sm:max-w-[480px] cursor-grab active:cursor-grabbing flex items-center justify-center overflow-visible"
       />
       {/* Editorial Marker Tag */}
