@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Navbar from "@/components/navigation/Navbar";
 import CustomCursor from "@/components/motion/CustomCursor";
+import ScrollChoreography from "@/components/motion/ScrollChoreography";
 import HeroSection from "@/components/hero/HeroSection";
 import BusinessSection from "@/components/business/BusinessSection";
 import ProductGallery from "@/components/products/ProductGallery";
@@ -35,6 +36,9 @@ export default function HomePage() {
     <div className="min-h-screen bg-[#F5F0E6] text-[#25221D] flex flex-col font-sans selection:bg-[#B08A3E] selection:text-[#FBF8F1]">
       {/* Desktop Precision GSAP Cursor */}
       <CustomCursor />
+
+      {/* Cinematic Scroll Choreography Engine */}
+      <ScrollChoreography />
 
       {/* Top Fixed Navigation */}
       <Navbar onOpenInquiry={handleOpenInquiry} />
