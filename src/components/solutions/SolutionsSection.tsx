@@ -72,14 +72,14 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
           </div>
         </div>
 
-        {/* Turnkey Engineering 4-Stage Lifecycle */}
+        {/* Turnkey Engineering 4-Stage Lifecycle — Guaranteed Visibility */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {turnkeyStages.map((stg, sIdx) => {
             const Icon = stg.icon;
             return (
               <div
                 key={sIdx}
-                className="bg-[#FBF8F1] border border-[#25221D]/10 rounded-xs p-6 space-y-4 relative group hover:border-[#B08A3E]/60 transition-all duration-300 shadow-xs"
+                className="bg-[#FBF8F1] border border-[#25221D]/10 rounded-xs p-6 space-y-4 relative group hover:border-[#B08A3E]/60 transition-all duration-200 shadow-2xs hover:shadow-xs"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs text-[#B08A3E] font-bold">
@@ -100,19 +100,19 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
           })}
         </div>
 
-        {/* Plant Capacity Tiers */}
+        {/* Plant Capacity Tiers — Guaranteed Visibility & Verified Tiers */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
           {plantTiers.map((tier, tIdx) => (
             <div
               key={tIdx}
               className={`rounded-xs p-8 flex flex-col justify-between border transition-all duration-300 relative ${
                 tier.popular
-                  ? "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E] shadow-md -translate-y-2"
-                  : "bg-[#FBF8F1] text-[#25221D] border-[#25221D]/15 hover:border-[#B08A3E]/40"
+                  ? "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E] shadow-md -translate-y-1 sm:-translate-y-2"
+                  : "bg-[#FBF8F1] text-[#25221D] border-[#25221D]/15 hover:border-[#B08A3E]/50 hover:-translate-y-0.5"
               }`}
             >
               {tier.popular && (
-                <div className="absolute -top-3 left-6 bg-[#B08A3E] text-[#25221D] text-[10px] font-mono uppercase tracking-widest font-bold px-3 py-1 rounded-xs">
+                <div className="absolute -top-3 left-6 bg-[#B08A3E] text-[#25221D] text-[10px] font-mono uppercase tracking-widest font-bold px-3 py-1 rounded-xs shadow-2xs">
                   MOST COMMISSIONED SPECIFICATION
                 </div>
               )}
@@ -122,7 +122,7 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
                   <span className={`text-xs font-mono tracking-wider uppercase ${tier.popular ? "text-[#D6BC7A]" : "text-[#806329]"}`}>
                     CAPACITY RANGE
                   </span>
-                  <div className="font-serif text-3xl font-bold leading-tight">
+                  <div className="font-serif text-3xl font-bold leading-tight tabular-nums">
                     {tier.capacity}
                   </div>
                   <div className={`text-base font-serif font-medium ${tier.popular ? "text-[#EFE7D8]" : "text-[#25221D]"}`}>
@@ -147,7 +147,7 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
               <div className="pt-8">
                 <button
                   onClick={() => onOpenInquiry(`Turnkey Solution (${tier.capacity})`)}
-                  className={`w-full py-3 text-xs font-mono uppercase tracking-widest rounded-xs border transition-colors flex items-center justify-center gap-2 ${
+                  className={`w-full py-3 text-xs font-mono uppercase tracking-widest rounded-xs border active:scale-[0.98] transition-all flex items-center justify-center gap-2 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E] ${
                     tier.popular
                       ? "bg-[#B08A3E] text-[#25221D] font-bold border-[#D6BC7A] hover:bg-[#D6BC7A]"
                       : "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E]/60 hover:bg-[#342F28]"

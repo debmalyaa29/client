@@ -65,7 +65,7 @@ export default function ContactSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Left: Verified Business Coordinates (5 cols) */}
-          <div className="lg:col-span-5 bg-[#25221D] text-[#FBF8F1] rounded-xs p-8 sm:p-10 flex flex-col justify-between border border-[#B08A3E]/40 shadow-sm space-y-8">
+          <div className="lg:col-span-5 bg-[#25221D] text-[#FBF8F1] rounded-xs p-8 sm:p-10 flex flex-col justify-between border border-[#B08A3E]/40 shadow-xs space-y-8">
             <div className="space-y-6">
               <div className="space-y-1">
                 <span className="text-xs font-mono uppercase tracking-widest text-[#D6BC7A]">
@@ -93,7 +93,7 @@ export default function ContactSection() {
                   <Phone className="w-4 h-4 text-[#D6BC7A] shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-[#FBF8F1]">Direct Engineering Desk</div>
-                    <a href={`tel:${businessData.contact.phone.replace(/\s+/g, "")}`} className="text-[#D6BC7A] hover:underline">
+                    <a href={`tel:${businessData.contact.phone.replace(/\s+/g, "")}`} className="text-[#D6BC7A] hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">
                       {businessData.contact.phone}
                     </a>
                   </div>
@@ -103,7 +103,7 @@ export default function ContactSection() {
                   <Mail className="w-4 h-4 text-[#D6BC7A] shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-[#FBF8F1]">Official Inquiries</div>
-                    <a href={`mailto:${businessData.contact.email}`} className="text-[#AFA698] hover:text-[#FBF8F1]">
+                    <a href={`mailto:${businessData.contact.email}`} className="text-[#AFA698] hover:text-[#FBF8F1] focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">
                       {businessData.contact.email}
                     </a>
                   </div>
@@ -125,7 +125,7 @@ export default function ContactSection() {
                 href={`https://wa.me/${businessData.contact.whatsapp.replace(/[^0-9]/g, "")}?text=Hello%20Calcutta%20Agri%20Tech,%20I%20would%20like%20to%20inquire%20about%20rice%20mill%20machinery.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 bg-[#B08A3E] text-[#25221D] font-mono text-xs uppercase tracking-widest font-bold rounded-xs flex items-center justify-center gap-2 hover:bg-[#D6BC7A] transition-colors"
+                className="w-full py-3 bg-[#B08A3E] text-[#25221D] font-mono text-xs uppercase tracking-widest font-bold rounded-xs flex items-center justify-center gap-2 hover:bg-[#D6BC7A] active:scale-[0.98] transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#D6BC7A]"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Instant WhatsApp Technical Desk</span>
@@ -173,7 +173,7 @@ export default function ContactSection() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Debabrata Dey / Bengal Rice Mill"
-                    className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:outline-hidden"
+                    className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:ring-1 focus:ring-[#B08A3E] focus:outline-hidden"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ export default function ContactSection() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+91 98300 XXXXX"
-                    className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:outline-hidden"
+                    className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:ring-1 focus:ring-[#B08A3E] focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -202,7 +202,7 @@ export default function ContactSection() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="contact@yourmill.com"
-                  className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:outline-hidden"
+                  className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:ring-1 focus:ring-[#B08A3E] focus:outline-hidden"
                 />
               </div>
 
@@ -216,14 +216,14 @@ export default function ContactSection() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Describe your raw paddy variety (e.g. Swarna / Minikit), existing plant capacity, or machines needed (Destoner, CCD Sortex, Turnkey Plant)..."
-                  className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:outline-hidden resize-none"
+                  className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:ring-1 focus:ring-[#B08A3E] focus:outline-hidden resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#342F28] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
               >
                 <span>{submitting ? "Transmitting..." : "Submit Inquiry to Sodepur Desk"}</span>
                 <ArrowUpRight className="w-4 h-4 text-[#D6BC7A]" />
