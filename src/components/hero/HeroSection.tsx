@@ -26,7 +26,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
         {/* Left Column: Editorial Typography & Positioning (7 cols) */}
         <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
           {/* Architectural Heritage Badge */}
-          <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xs bg-[#EFE7D8] border border-[#B08A3E]/30 w-fit shadow-2xs">
+          <div className="hero-badge inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xs bg-[#EFE7D8] border border-[#B08A3E]/30 w-fit shadow-2xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#B08A3E]" />
             <span className="text-[11px] font-mono tracking-widest uppercase text-[#806329] font-semibold">
               Kolkata Rice Industrial Corridor • Sodepur Hub
@@ -36,17 +36,25 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
           {/* Signature Headline — Strictly Preserved Line Breaks & Editorial Hierarchy */}
           <div className="space-y-2">
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-normal tracking-tight text-[#25221D] leading-[1.08]">
-              ENGINEERING THE <br />
-              <span className="italic font-light text-[#806329]">FUTURE</span> OF <br />
-              RICE MILLING.
+              <span className="block overflow-hidden">
+                <span className="hero-headline-line block">ENGINEERING THE</span>
+              </span>
+              <span className="block overflow-hidden">
+                <span className="hero-headline-line block">
+                  <span className="italic font-light text-[#806329]">FUTURE</span> OF
+                </span>
+              </span>
+              <span className="block overflow-hidden">
+                <span className="hero-headline-line block">RICE MILLING.</span>
+              </span>
             </h1>
-            <p className="max-w-xl text-base sm:text-lg text-[#635C52] font-sans leading-relaxed pt-2">
+            <p className="hero-fade-in max-w-xl text-base sm:text-lg text-[#635C52] font-sans leading-relaxed pt-2">
               Calcutta Agri Tech delivers high-yield grain processing machinery, precision gravity destoners, and optical color sorters built to withstand industrial multi-shift operation.
             </p>
           </div>
 
           {/* Action CTAs */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="hero-cta flex flex-wrap items-center gap-4 pt-2">
             <button
               onClick={() => onOpenInquiry("Complete Plant Inquiry")}
               className="px-6 py-3.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] active:scale-[0.98] transition-all duration-200 flex items-center gap-2 shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
@@ -65,7 +73,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
           </div>
 
           {/* Integrated Founder Citation & Key Metrics with Architectural Divider Rhythm */}
-          <div className="pt-6 border-t border-[#25221D]/15 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:divide-x sm:divide-[#25221D]/10">
+          <div className="hero-stats pt-6 border-t border-[#25221D]/15 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:divide-x sm:divide-[#25221D]/10">
             {businessData.stats.map((stat, idx) => (
               <div key={idx} className={`space-y-1 ${idx > 0 ? "sm:pl-4" : ""}`}>
                 <div className="font-serif text-2xl sm:text-3xl font-bold text-[#25221D] flex items-baseline gap-1 tabular-nums">
@@ -89,7 +97,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
           </div>
 
           {/* Layer 2: Founder Cutout Portrait Card (Overlaid Composition) */}
-          <div className="relative z-10 w-full max-w-sm -mt-14 sm:-mt-16 bg-[#FBF8F1]/95 backdrop-blur-md border border-[#B08A3E]/35 rounded-xs p-4 shadow-lg flex items-center gap-4 transition-transform hover:-translate-y-1 duration-300">
+          <div className="hero-founder-card relative z-10 w-full max-w-sm -mt-14 sm:-mt-16 bg-[#FBF8F1]/95 backdrop-blur-md border border-[#B08A3E]/35 rounded-xs p-4 shadow-lg flex items-center gap-4 transition-transform hover:-translate-y-1 duration-300">
             <div className="relative w-20 h-24 sm:w-24 sm:h-28 rounded-xs overflow-hidden shrink-0 border border-[#B08A3E]/40 bg-[#EAE0CD]">
               <Image
                 src={businessData.founder.photo}
