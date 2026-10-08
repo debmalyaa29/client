@@ -226,27 +226,47 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
     rimLight.position.set(-5, -2, -2);
     scene.add(rimLight);
 
-    // 5. Mouse Interaction / Smooth Drag
-    let mouseX = 0;
-    const targetRotationY = -1.2; // Start angled towards India
-    globeGroup.rotation.y = targetRotationY;
+    // 5. Interactive Damped Inertia Drag & Scroll Motion
+    let isDragging = false;
+    let prevPointerX = 0;
+    let prevPointerY = 0;
+    let targetRotationY = -1.2; // Calcutta initial orientation
+    let targetRotationX = 0.35;
+    let dragVelocityX = 0;
+    let dragVelocityY = 0;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const relX = (e.clientX - rect.left) / rect.width - 0.5;
-      mouseX = relX * 0.8;
+    const handlePointerDown = (e: PointerEvent) => {
+      isDragging = true;
+      prevPointerX = e.clientX;
+      prevPointerY = e.clientY;
+      dragVelocityX = 0;
+      dragVelocityY = 0;
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        const rect = container.getBoundingClientRect();
-        const relX = (e.touches[0].clientX - rect.left) / rect.width - 0.5;
-        mouseX = relX * 0.8;
-      }
+    const handlePointerMove = (e: PointerEvent) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - prevPointerX;
+      const deltaY = e.clientY - prevPointerY;
+      prevPointerX = e.clientX;
+      prevPointerY = e.clientY;
+
+      targetRotationY += deltaX * 0.006;
+      targetRotationX += deltaY * 0.004;
+      // Clamp vertical latitude tilt to prevent tumbling upside down
+      targetRotationX = Math.max(-0.6, Math.min(0.8, targetRotationX));
+
+      dragVelocityX = deltaX * 0.003;
+      dragVelocityY = deltaY * 0.002;
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    const handlePointerUp = () => {
+      isDragging = false;
+    };
+
+    container.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("pointercancel", handlePointerUp);
 
     // Resize Handler
     const handleResize = () => {
@@ -262,7 +282,7 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // 6. Animation Loop
+    // 6. Animation Loop with Physics Damping & Scroll Reactivity
     let animationFrameId: number;
     const startTime = performance.now();
 
@@ -270,14 +290,32 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
       animationFrameId = requestAnimationFrame(animate);
       const elapsedTime = (performance.now() - startTime) * 0.001;
 
-      // Steady rotation with subtle interactive response if reduced-motion not active
       if (!prefersReducedMotion) {
-        globeGroup.rotation.y += 0.002 + mouseX * 0.01;
-        dustMesh.rotation.y += 0.0008;
+        if (!isDragging) {
+          // Slow steady idle rotation
+          targetRotationY += 0.0016;
+          // Apply residual drag inertia
+          targetRotationY += dragVelocityX;
+          targetRotationX += dragVelocityY;
+          dragVelocityX *= 0.92;
+          dragVelocityY *= 0.92;
+        }
+
+        // Smooth critically damped lerp
+        globeGroup.rotation.y += (targetRotationY - globeGroup.rotation.y) * 0.08;
+        globeGroup.rotation.x += (targetRotationX - globeGroup.rotation.x) * 0.08;
+        dustMesh.rotation.y += 0.0006;
+
+        // Subtle scroll-driven depth tracking
+        const scrollOffset = Math.min(window.scrollY / 800, 1.0);
+        if (scrollOffset > 0) {
+          atmosphere.position.y = -scrollOffset * 0.15;
+          globeGroup.position.y = -scrollOffset * 0.12;
+        }
       }
 
-      // Pulse the Calcutta beacon
-      const pulseScale = 1.0 + Math.sin(elapsedTime * 3) * 0.25;
+      // Pulse the Sodepur/Calcutta beacon ring
+      const pulseScale = 1.0 + Math.sin(elapsedTime * 3) * 0.22;
       pulseRing.scale.set(pulseScale, pulseScale, pulseScale);
       pulseRingMat.opacity = 0.45 + Math.sin(elapsedTime * 3) * 0.35;
 
@@ -287,8 +325,10 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
 
     // Cleanup
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("pointercancel", handlePointerUp);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
       renderer.dispose();
