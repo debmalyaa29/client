@@ -10,6 +10,9 @@ export default function ScrollChoreography() {
 
     initGsap();
 
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const travelDistance = isMobile ? 16 : 30;
+
     const ctx = gsap.context(() => {
       // 1. Cinematic Section Header Reveals
       const sectionHeaders = document.querySelectorAll<HTMLElement>(
@@ -26,9 +29,9 @@ export default function ScrollChoreography() {
             start: "top 85%",
             toggleActions: "play none none none",
           },
-          y: 28,
+          y: travelDistance * 0.8,
           opacity: 0,
-          duration: 0.9,
+          duration: 0.85,
           ease: "power3.out",
         });
       });
@@ -67,7 +70,7 @@ export default function ScrollChoreography() {
             start: "top 80%",
             toggleActions: "play none none none",
           },
-          y: 35,
+          y: travelDistance,
           opacity: 0,
           duration: 0.85,
           stagger: 0.12,

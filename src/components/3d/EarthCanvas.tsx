@@ -38,13 +38,14 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
     updateCameraDistance(width, height);
 
     // 2. Renderer
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
       powerPreference: "high-performance",
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     container.appendChild(renderer.domElement);
 
     // 3. Earth Globe Group
