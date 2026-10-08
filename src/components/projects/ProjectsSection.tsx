@@ -35,8 +35,11 @@ export default function ProjectsSection({ onOpenInquiry }: ProjectsSectionProps)
             <div
               key={project.id}
               data-cursor="view"
-              className="bg-[#FBF8F1] border border-[#25221D]/10 hover:border-[#B08A3E]/50 rounded-xs p-6 sm:p-10 shadow-xs transition-all duration-300 relative group"
+              className="bg-[#FBF8F1] border border-[#25221D]/10 hover:border-[#B08A3E]/60 rounded-xs p-6 sm:p-10 shadow-xs transition-all duration-400 relative group overflow-hidden hover:-translate-y-0.5"
             >
+              {/* Bottom Gold Reveal Line */}
+              <div className="absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full bg-[#B08A3E] transition-all duration-500 ease-out pointer-events-none" />
+
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 
                 {/* Left Overview (7 cols) */}
