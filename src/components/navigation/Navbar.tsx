@@ -19,7 +19,7 @@ export default function Navbar({ onOpenInquiry }: NavbarProps) {
       setScrolled(window.scrollY > 40);
 
       // Track current section
-      const sections = ["home", "business", "products", "explorer", "solutions", "process", "projects", "contact"];
+      const sections = ["home", "business", "products", "solutions", "process", "projects", "contact"];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -39,7 +39,6 @@ export default function Navbar({ onOpenInquiry }: NavbarProps) {
     { label: "Home", href: "#home", id: "home" },
     { label: "Business", href: "#business", id: "business" },
     { label: "Products", href: "#products", id: "products" },
-    { label: "3D Machinery", href: "#explorer", id: "explorer" },
     { label: "Solutions", href: "#solutions", id: "solutions" },
     { label: "Milling Process", href: "#process", id: "process" },
     { label: "Installations", href: "#projects", id: "projects" },

@@ -4,15 +4,14 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { productsData } from "@/data/products";
-import { ArrowUpRight, Box, ChevronRight, Check } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Check } from "lucide-react";
 import { isReducedMotion } from "@/lib/animation/tokens";
 
 interface ProductGalleryProps {
   onOpenInquiry: (machineName: string) => void;
-  onExplore3D: (machineType: "destoner" | "sortex") => void;
 }
 
-export default function ProductGallery({ onOpenInquiry, onExplore3D }: ProductGalleryProps) {
+export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
   const [selectedProductId, setSelectedProductId] = useState<string>(productsData[0].id);
   const showcaseRef = useRef<HTMLDivElement>(null);
 
@@ -169,16 +168,6 @@ export default function ProductGallery({ onOpenInquiry, onExplore3D }: ProductGa
               </div>
 
               <div className="flex items-center gap-3">
-                {(selectedProduct.id === "destoner" || selectedProduct.id === "sortex") && (
-                  <button
-                    onClick={() => onExplore3D(selectedProduct.id as "destoner" | "sortex")}
-                    className="px-4 py-2 bg-[#EFE7D8] text-[#25221D] text-xs font-mono uppercase tracking-wider border border-[#B08A3E]/40 hover:bg-[#EAE0CD] transition-colors flex items-center gap-1.5 rounded-xs"
-                  >
-                    <Box className="w-3.5 h-3.5 text-[#806329]" />
-                    <span>Explore in 3D</span>
-                  </button>
-                )}
-
                 <button
                   onClick={() => onOpenInquiry(selectedProduct.name)}
                   className="px-5 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-colors flex items-center gap-2"

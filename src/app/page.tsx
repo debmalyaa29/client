@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import Navbar from "@/components/navigation/Navbar";
 import CustomCursor from "@/components/motion/CustomCursor";
+import LoadingScreen from "@/components/motion/LoadingScreen";
 import ScrollChoreography from "@/components/motion/ScrollChoreography";
 import HeroSection from "@/components/hero/HeroSection";
 import BusinessSection from "@/components/business/BusinessSection";
 import ProductGallery from "@/components/products/ProductGallery";
-import MachineExplorer from "@/components/products/MachineExplorer";
 import SolutionsSection from "@/components/solutions/SolutionsSection";
 import ProcessSection from "@/components/process/ProcessSection";
 import WhyUsSection from "@/components/why-us/WhyUsSection";
@@ -25,15 +25,11 @@ export default function HomePage() {
     setInquiryModalOpen(true);
   };
 
-  const handleExplore3D = () => {
-    const explorerEl = document.getElementById("explorer");
-    if (explorerEl) {
-      explorerEl.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <div className="min-h-screen bg-[#F5F0E6] text-[#25221D] flex flex-col font-sans selection:bg-[#B08A3E] selection:text-[#FBF8F1]">
+      {/* Cinematic Precision Brand Loader */}
+      <LoadingScreen />
+
       {/* Desktop Precision GSAP Cursor */}
       <CustomCursor />
 
@@ -52,31 +48,25 @@ export default function HomePage() {
         <BusinessSection />
 
         {/* 3. Machinery Catalog with Horizontal Expanding Panels */}
-        <ProductGallery
-          onOpenInquiry={handleOpenInquiry}
-          onExplore3D={handleExplore3D}
-        />
+        <ProductGallery onOpenInquiry={handleOpenInquiry} />
 
-        {/* 4. Interactive 3D Mechanical Explorer Rig (Destoner & CCD Sortex) */}
-        <MachineExplorer onOpenInquiry={handleOpenInquiry} />
-
-        {/* 5. Complete Rice Mill Turnkey Solutions */}
+        {/* 4. Complete Rice Mill Turnkey Solutions */}
         <SolutionsSection onOpenInquiry={handleOpenInquiry} />
 
-        {/* 6. 8-Stage Interactive Rice Milling Process */}
+        {/* 5. 8-Stage Interactive Rice Milling Process */}
         <ProcessSection />
 
-        {/* 7. Why Choose Us / Industrial Competence */}
+        {/* 6. Why Choose Us / Industrial Competence */}
         <WhyUsSection />
 
-        {/* 8. Commissioned Project Installations & Case Studies */}
+        {/* 7. Commissioned Project Installations & Case Studies */}
         <ProjectsSection onOpenInquiry={handleOpenInquiry} />
 
-        {/* 9. Contact & Sodepur Engineering Desk Form */}
+        {/* 8. Contact & Sodepur Engineering Desk Form */}
         <ContactSection />
       </main>
 
-      {/* 10. Quiet Deep Charcoal Footer */}
+      {/* 9. Quiet Deep Charcoal Footer */}
       <Footer />
 
       {/* Global Interactive Technical Inquiry Modal */}
