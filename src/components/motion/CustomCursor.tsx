@@ -1,165 +1,120 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
+import React, { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { isReducedMotion, isTouchDevice } from "@/lib/animation/tokens";
 
 export default function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const labelRef = useRef<HTMLSpanElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [cursorState, setCursorState] = useState<"default" | "link" | "explore" | "drag">("default");
+  const [visible, setVisible] = useState(false);
+
+  const rawX = useMotionValue(-100);
+  const rawY = useMotionValue(-100);
+
+  // High-precision responsive springs for dot and trailing ring
+  const dotX = useSpring(rawX, { damping: 30, stiffness: 500 });
+  const dotY = useSpring(rawY, { damping: 30, stiffness: 500 });
+
+  const ringX = useSpring(rawX, { damping: 22, stiffness: 200 });
+  const ringY = useSpring(rawY, { damping: 22, stiffness: 200 });
 
   useEffect(() => {
-    // Strictly desktop-only & respect reduced-motion
     if (isTouchDevice() || isReducedMotion()) return;
-
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    const label = labelRef.current;
-    if (!dot || !ring) return;
-
-    // Add class to body to hide default pointer only when desktop cursor is active
+    setMounted(true);
     document.body.classList.add("custom-cursor-active");
 
-    // Performant GSAP quickTo setters
-    const setDotX = gsap.quickTo(dot, "x", { duration: 0.1, ease: "power3" });
-    const setDotY = gsap.quickTo(dot, "y", { duration: 0.1, ease: "power3" });
-
-    const setRingX = gsap.quickTo(ring, "x", { duration: 0.28, ease: "power2.out" });
-    const setRingY = gsap.quickTo(ring, "y", { duration: 0.28, ease: "power2.out" });
-
-    let isVisible = false;
-
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isVisible) {
-        gsap.to([dot, ring], { opacity: 1, duration: 0.2 });
-        isVisible = true;
-      }
-      setDotX(e.clientX);
-      setDotY(e.clientY);
-      setRingX(e.clientX);
-      setRingY(e.clientY);
+    const onPointerMove = (e: PointerEvent) => {
+      rawX.set(e.clientX);
+      rawY.set(e.clientY);
+      if (!visible) setVisible(true);
     };
 
-    const onMouseLeave = () => {
-      gsap.to([dot, ring], { opacity: 0, duration: 0.25 });
-      isVisible = false;
-    };
+    const onPointerLeave = () => setVisible(false);
+    const onPointerEnter = () => setVisible(true);
 
-    const onMouseEnter = () => {
-      gsap.to([dot, ring], { opacity: 1, duration: 0.2 });
-      isVisible = true;
-    };
-
-    // Hover state management via event delegation (no React state updates!)
-    const handleMouseOver = (e: MouseEvent) => {
+    const onMouseOver = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest(
         "a, button, [data-cursor], input, select, textarea"
       ) as HTMLElement | null;
 
       if (!target) {
-        // Default state
-        gsap.to(ring, {
-          scale: 1,
-          borderColor: "rgba(176, 138, 62, 0.45)",
-          backgroundColor: "transparent",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-        gsap.to(dot, { scale: 1, backgroundColor: "#B08A3E", duration: 0.2 });
-        if (label) gsap.to(label, { opacity: 0, scale: 0.8, duration: 0.15 });
+        setCursorState("default");
         return;
       }
 
       const cursorType = target.getAttribute("data-cursor");
-
-      if (cursorType === "explore") {
-        gsap.to(ring, {
-          scale: 2.2,
-          borderColor: "#B08A3E",
-          backgroundColor: "rgba(37, 34, 29, 0.85)",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-        gsap.to(dot, { scale: 0, duration: 0.2 });
-        if (label) {
-          label.textContent = "EXPLORE";
-          gsap.to(label, { opacity: 1, scale: 1, duration: 0.2 });
-        }
-      } else if (cursorType === "drag") {
-        gsap.to(ring, {
-          scale: 2.4,
-          borderColor: "#D6BC7A",
-          backgroundColor: "rgba(37, 34, 29, 0.85)",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-        gsap.to(dot, { scale: 0, duration: 0.2 });
-        if (label) {
-          label.textContent = "360° DRAG";
-          gsap.to(label, { opacity: 1, scale: 1, duration: 0.2 });
-        }
-      } else if (cursorType === "view") {
-        gsap.to(ring, {
-          scale: 2.0,
-          borderColor: "#B08A3E",
-          backgroundColor: "rgba(37, 34, 29, 0.85)",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-        gsap.to(dot, { scale: 0, duration: 0.2 });
-        if (label) {
-          label.textContent = "VIEW";
-          gsap.to(label, { opacity: 1, scale: 1, duration: 0.2 });
-        }
+      if (cursorType === "drag") {
+        setCursorState("drag");
+      } else if (cursorType === "explore") {
+        setCursorState("explore");
       } else {
-        // Standard interactive link/button
-        gsap.to(ring, {
-          scale: 1.5,
-          borderColor: "#B08A3E",
-          backgroundColor: "rgba(176, 138, 62, 0.08)",
-          duration: 0.25,
-          ease: "power2.out",
-        });
-        gsap.to(dot, { scale: 0.7, backgroundColor: "#D6BC7A", duration: 0.2 });
-        if (label) gsap.to(label, { opacity: 0, scale: 0.8, duration: 0.15 });
+        setCursorState("link");
       }
     };
 
-    window.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseleave", onMouseLeave);
-    document.addEventListener("mouseenter", onMouseEnter);
-    document.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    document.addEventListener("mouseleave", onPointerLeave);
+    document.addEventListener("mouseenter", onPointerEnter);
+    document.addEventListener("mouseover", onMouseOver, { passive: true });
 
     return () => {
       document.body.classList.remove("custom-cursor-active");
-      window.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseleave", onMouseLeave);
-      document.removeEventListener("mouseenter", onMouseEnter);
-      document.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("mouseleave", onPointerLeave);
+      document.removeEventListener("mouseenter", onPointerEnter);
+      document.removeEventListener("mouseover", onMouseOver);
     };
-  }, []);
+  }, [rawX, rawY, visible]);
+
+  if (!mounted) return null;
 
   return (
     <>
       {/* Primary Gold Focal Dot */}
-      <div
-        ref={dotRef}
+      <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-9999 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#B08A3E] opacity-0"
+        style={{
+          x: dotX,
+          y: dotY,
+          opacity: visible ? 1 : 0,
+        }}
+        animate={{
+          scale: cursorState === "link" ? 0.7 : cursorState === "drag" || cursorState === "explore" ? 0 : 1,
+        }}
+        transition={{ duration: 0.15 }}
+        className="pointer-events-none fixed top-0 left-0 z-9999 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#B08A3E]"
       />
 
-      {/* Secondary Muted Gold Trailing Ring */}
-      <div
-        ref={ringRef}
+      {/* Secondary Muted Gold Spring-Following Ring */}
+      <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-9998 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full border border-[#B08A3E]/45 opacity-0 flex items-center justify-center transition-colors"
+        style={{
+          x: ringX,
+          y: ringY,
+          opacity: visible ? 1 : 0,
+        }}
+        animate={{
+          scale: cursorState === "link" ? 1.4 : cursorState === "drag" || cursorState === "explore" ? 2.2 : 1,
+          backgroundColor:
+            cursorState === "drag" || cursorState === "explore"
+              ? "rgba(37, 34, 29, 0.85)"
+              : cursorState === "link"
+              ? "rgba(176, 138, 62, 0.1)"
+              : "rgba(0, 0, 0, 0)",
+          borderColor:
+            cursorState === "drag" || cursorState === "explore"
+              ? "#D6BC7A"
+              : cursorState === "link"
+              ? "#B08A3E"
+              : "rgba(176, 138, 62, 0.4)",
+        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="pointer-events-none fixed top-0 left-0 z-9998 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full border flex items-center justify-center text-[9px] font-mono tracking-widest text-[#FBF8F1] uppercase font-bold"
       >
-        <span
-          ref={labelRef}
-          className="text-[9px] font-mono tracking-widest text-[#FBF8F1] uppercase font-bold opacity-0 scale-75 select-none pointer-events-none"
-        />
-      </div>
+        {cursorState === "drag" && "DRAG"}
+        {cursorState === "explore" && "VIEW"}
+      </motion.div>
     </>
   );
 }
