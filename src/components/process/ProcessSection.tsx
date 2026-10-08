@@ -1,12 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import gsap from "gsap";
 import { millingStepsData } from "@/data/process";
 import { Gauge } from "lucide-react";
+import { isReducedMotion } from "@/lib/animation/tokens";
 
 export default function ProcessSection() {
   const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
+  const detailPanelRef = useRef<HTMLDivElement>(null);
   const activeStep = millingStepsData[activeStepIndex];
+
+  const handleStepChange = (newIndex: number) => {
+    if (newIndex === activeStepIndex) return;
+    if (detailPanelRef.current && !isReducedMotion()) {
+      gsap.fromTo(
+        detailPanelRef.current,
+        { opacity: 0.35, y: 12 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }
+      );
+    }
+    setActiveStepIndex(newIndex);
+  };
 
   return (
     <section id="process" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#F5F0E6] relative overflow-hidden">
@@ -48,7 +63,7 @@ export default function ProcessSection() {
               return (
                 <button
                   key={step.id}
-                  onClick={() => setActiveStepIndex(idx)}
+                  onClick={() => handleStepChange(idx)}
                   className={`flex flex-col items-center group transition-all p-2 rounded-xs focus:outline-hidden ${
                     isActive ? "scale-105" : "opacity-80 hover:opacity-100"
                   }`}
@@ -78,7 +93,10 @@ export default function ProcessSection() {
         </div>
 
         {/* Active Stage Detailed Breakdown Panel */}
-        <div className="bg-[#FBF8F1] border border-[#B08A3E]/35 rounded-xs p-8 sm:p-10 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div
+          ref={detailPanelRef}
+          className="bg-[#FBF8F1] border border-[#B08A3E]/35 rounded-xs p-8 sm:p-10 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+        >
           
           {/* Left: Stage Overview & Mechanics (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
@@ -122,14 +140,14 @@ export default function ProcessSection() {
             <div className="flex items-center gap-3 pt-2">
               <button
                 disabled={activeStepIndex === 0}
-                onClick={() => setActiveStepIndex((prev: number) => Math.max(0, prev - 1))}
+                onClick={() => handleStepChange(Math.max(0, activeStepIndex - 1))}
                 className="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#25221D]/20 bg-[#EFE7D8] disabled:opacity-30 hover:bg-[#EAE0CD] transition-colors"
               >
                 ← Previous Stage
               </button>
               <button
                 disabled={activeStepIndex === millingStepsData.length - 1}
-                onClick={() => setActiveStepIndex((prev: number) => Math.min(millingStepsData.length - 1, prev + 1))}
+                onClick={() => handleStepChange(Math.min(millingStepsData.length - 1, activeStepIndex + 1))}
                 className="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#B08A3E] bg-[#25221D] text-[#FBF8F1] disabled:opacity-30 hover:bg-[#38322A] transition-colors"
               >
                 Next Stage →
