@@ -223,7 +223,16 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
       mouseX = relX * 0.8;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        const rect = container.getBoundingClientRect();
+        const relX = (e.touches[0].clientX - rect.left) / rect.width - 0.5;
+        mouseX = relX * 0.8;
+      }
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
 
     // Resize Handler
     const handleResize = () => {
@@ -236,6 +245,10 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
     };
     window.addEventListener("resize", handleResize);
 
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     // 6. Animation Loop
     let animationFrameId: number;
     const clock = new THREE.Clock();
@@ -244,9 +257,11 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
       animationFrameId = requestAnimationFrame(animate);
       const elapsedTime = clock.getElapsedTime();
 
-      // Steady rotation with subtle interactive response
-      globeGroup.rotation.y += 0.002 + mouseX * 0.01;
-      dustMesh.rotation.y += 0.0008;
+      // Steady rotation with subtle interactive response if reduced-motion not active
+      if (!prefersReducedMotion) {
+        globeGroup.rotation.y += 0.002 + mouseX * 0.01;
+        dustMesh.rotation.y += 0.0008;
+      }
 
       // Pulse the Calcutta beacon
       const pulseScale = 1.0 + Math.sin(elapsedTime * 3) * 0.25;
@@ -260,6 +275,7 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
     // Cleanup
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
       renderer.dispose();

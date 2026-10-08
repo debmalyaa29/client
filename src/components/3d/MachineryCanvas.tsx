@@ -213,9 +213,35 @@ export default function MachineryCanvas({
       isDragging = false;
     };
 
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      const deltaX = e.touches[0].clientX - previousMousePosition.x;
+      const deltaY = e.touches[0].clientY - previousMousePosition.y;
+
+      machineGroup.rotation.y += deltaX * 0.01;
+      machineGroup.rotation.x = Math.max(-0.4, Math.min(0.4, machineGroup.rotation.x + deltaY * 0.005));
+
+      previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    };
+
+    const onTouchEnd = () => {
+      isDragging = false;
+    };
+
     container.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
+
+    container.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
 
     // Resize Handler
     const handleResize = () => {
@@ -228,13 +254,18 @@ export default function MachineryCanvas({
     };
     window.addEventListener("resize", handleResize);
 
+    // Reduced motion check
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     // Animation Loop
     let animId: number;
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
-      // Auto slow rotate when not interacting
-      if (!isDragging) {
+      // Auto slow rotate when not interacting and reduced-motion not requested
+      if (!isDragging && !prefersReducedMotion) {
         machineGroup.rotation.y += 0.003;
       }
 
@@ -252,6 +283,9 @@ export default function MachineryCanvas({
       container.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
+      container.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animId);
       renderer.dispose();
