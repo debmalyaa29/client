@@ -189,66 +189,47 @@ export default function MachineryCanvas({
     goldFill.position.set(-3, 2, -2);
     scene.add(goldFill);
 
-    // Interaction Variables
+    // Interaction Handling with Damped Inertia
     let isDragging = false;
-    let previousMousePosition = { x: 0, y: 0 };
+    let prevPointer = { x: 0, y: 0 };
+    let rotVelX = 0;
+    let rotVelY = 0;
 
-    const onMouseDown = (e: MouseEvent) => {
+    const onPointerDown = (e: PointerEvent) => {
       isDragging = true;
-      previousMousePosition = { x: e.clientX, y: e.clientY };
+      prevPointer = { x: e.clientX, y: e.clientY };
+      rotVelX = 0;
+      rotVelY = 0;
     };
 
-    const onMouseMove = (e: MouseEvent) => {
+    const onPointerMove = (e: PointerEvent) => {
       if (!isDragging) return;
-      const deltaX = e.clientX - previousMousePosition.x;
-      const deltaY = e.clientY - previousMousePosition.y;
+      const deltaX = e.clientX - prevPointer.x;
+      const deltaY = e.clientY - prevPointer.y;
 
-      machineGroup.rotation.y += deltaX * 0.01;
-      machineGroup.rotation.x = Math.max(-0.4, Math.min(0.4, machineGroup.rotation.x + deltaY * 0.005));
+      machineGroup.rotation.y += deltaX * 0.008;
+      machineGroup.rotation.x = Math.max(-0.45, Math.min(0.45, machineGroup.rotation.x + deltaY * 0.005));
 
-      previousMousePosition = { x: e.clientX, y: e.clientY };
+      rotVelX = deltaX * 0.004;
+      rotVelY = deltaY * 0.0025;
+      prevPointer = { x: e.clientX, y: e.clientY };
     };
 
-    const onMouseUp = () => {
+    const onPointerUp = () => {
       isDragging = false;
     };
 
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        isDragging = true;
-        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      }
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      if (!isDragging || e.touches.length !== 1) return;
-      const deltaX = e.touches[0].clientX - previousMousePosition.x;
-      const deltaY = e.touches[0].clientY - previousMousePosition.y;
-
-      machineGroup.rotation.y += deltaX * 0.01;
-      machineGroup.rotation.x = Math.max(-0.4, Math.min(0.4, machineGroup.rotation.x + deltaY * 0.005));
-
-      previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    };
-
-    const onTouchEnd = () => {
-      isDragging = false;
-    };
-
-    container.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-
-    container.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("touchend", onTouchEnd);
+    container.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
 
     // Resize Handler
     const handleResize = () => {
       if (!container) return;
       const newW = container.clientWidth;
       const newH = container.clientHeight;
-      camera.aspect = newW / newH;
+      camera.aspect = newW / (newH || 1);
       camera.updateProjectionMatrix();
       renderer.setSize(newW, newH);
     };
@@ -259,20 +240,37 @@ export default function MachineryCanvas({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Animation Loop
+    // Cinematic Camera Targets
+    const targetCameraPos = new THREE.Vector3();
+
+    // Animation Loop with Cinematic Camera & Staggered Part Lerp
     let animId: number;
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
-      // Auto slow rotate when not interacting and reduced-motion not requested
+      // Camera approach when exploded, pullback when assembled
+      if (exploded) {
+        targetCameraPos.set(4.0, 3.0, 5.0);
+      } else {
+        targetCameraPos.set(3.5, 2.4, 4.4);
+      }
+      camera.position.lerp(targetCameraPos, 0.04);
+      camera.lookAt(0, 0, 0);
+
+      // Auto rotation and inertia physics
       if (!isDragging && !prefersReducedMotion) {
-        machineGroup.rotation.y += 0.003;
+        machineGroup.rotation.y += 0.0025 + rotVelX;
+        machineGroup.rotation.x = Math.max(-0.45, Math.min(0.45, machineGroup.rotation.x + rotVelY));
+        rotVelX *= 0.92;
+        rotVelY *= 0.92;
       }
 
-      // Smoothly interpolate between assembled and exploded positions
-      parts.forEach((p) => {
+      // Smooth staggered interpolation between assembled and exploded coordinates
+      parts.forEach((p, idx) => {
         const targetPos = exploded ? p.explodePos : p.basePos;
-        p.mesh.position.lerp(targetPos, 0.08);
+        // Stagger interpolation weight: internal parts reveal slightly after outer frame
+        const lerpFactor = exploded ? 0.06 + (idx % 3) * 0.015 : 0.09;
+        p.mesh.position.lerp(targetPos, lerpFactor);
       });
 
       renderer.render(scene, camera);
@@ -280,12 +278,10 @@ export default function MachineryCanvas({
     animate();
 
     return () => {
-      container.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-      container.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
+      container.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animId);
       renderer.dispose();
