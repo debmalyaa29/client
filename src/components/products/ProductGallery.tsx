@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
 import { productsData } from "@/data/products";
 import { ArrowUpRight, Box, ChevronRight, Check } from "lucide-react";
+import { isReducedMotion } from "@/lib/animation/tokens";
 
 interface ProductGalleryProps {
   onOpenInquiry: (machineName: string) => void;
@@ -12,8 +14,22 @@ interface ProductGalleryProps {
 
 export default function ProductGallery({ onOpenInquiry, onExplore3D }: ProductGalleryProps) {
   const [selectedProductId, setSelectedProductId] = useState<string>(productsData[0].id);
+  const showcaseRef = useRef<HTMLDivElement>(null);
 
-  const selectedProduct = productsData.find((p) => p.id === selectedProductId) || productsData[0];
+  const selectedIndex = productsData.findIndex((p) => p.id === selectedProductId);
+  const selectedProduct = productsData[selectedIndex] || productsData[0];
+
+  const handleSelectProduct = (id: string) => {
+    if (id === selectedProductId) return;
+    if (showcaseRef.current && !isReducedMotion()) {
+      gsap.fromTo(
+        showcaseRef.current,
+        { opacity: 0.3, y: 10 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+      );
+    }
+    setSelectedProductId(id);
+  };
 
   return (
     <section id="products" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#F5F0E6]">
@@ -45,7 +61,7 @@ export default function ProductGallery({ onOpenInquiry, onExplore3D }: ProductGa
               return (
                 <button
                   key={prod.id}
-                  onClick={() => setSelectedProductId(prod.id)}
+                  onClick={() => handleSelectProduct(prod.id)}
                   className={`text-left p-4 rounded-xs border transition-all duration-300 flex items-center justify-between group ${
                     isSelected
                       ? "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E] shadow-sm translate-x-1"
@@ -76,7 +92,23 @@ export default function ProductGallery({ onOpenInquiry, onExplore3D }: ProductGa
           </div>
 
           {/* Right Column: Expanded Product Showcase (8 cols) */}
-          <div className="col-span-8 bg-[#FBF8F1] border border-[#B08A3E]/30 rounded-xs p-8 flex flex-col justify-between shadow-xs">
+          <div
+            ref={showcaseRef}
+            className="col-span-8 bg-[#FBF8F1] border border-[#B08A3E]/30 rounded-xs p-8 flex flex-col justify-between shadow-xs relative overflow-hidden"
+          >
+            {/* Top Gold Progress Indicator */}
+            <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#25221D]/10">
+              <div className="flex items-center gap-2 text-[11px] font-mono text-[#806329]">
+                <span className="font-bold">SPEC SHEET {selectedIndex + 1} OF {productsData.length}</span>
+              </div>
+              <div className="w-36 h-1 bg-[#25221D]/10 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#B08A3E] transition-all duration-400 ease-out"
+                  style={{ width: `${((selectedIndex + 1) / productsData.length) * 100}%` }}
+                />
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               
               {/* Product Visual */}
