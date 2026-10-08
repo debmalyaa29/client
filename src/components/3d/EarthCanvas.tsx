@@ -20,8 +20,22 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
 
     // 1. Scene & Camera
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 0, 4.2);
+    const camera = new THREE.PerspectiveCamera(45, width / (height || 1), 0.1, 1000);
+
+    const updateCameraDistance = (w: number, h: number) => {
+      const aspect = w / (h || 1);
+      camera.aspect = aspect;
+      // Generous framing: ensures globe, rings, and beacon never crop on left, right, or vertical edges
+      const baseDistance = 4.4;
+      if (aspect < 1) {
+        camera.position.z = baseDistance / aspect;
+      } else {
+        camera.position.z = baseDistance;
+      }
+      camera.updateProjectionMatrix();
+    };
+
+    updateCameraDistance(width, height);
 
     // 2. Renderer
     const renderer = new THREE.WebGLRenderer({
@@ -39,7 +53,7 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
     scene.add(globeGroup);
 
     // Core Sphere: Warm Ivory/Cream
-    const sphereRadius = 1.6;
+    const sphereRadius = 1.35;
     const sphereGeo = new THREE.SphereGeometry(sphereRadius, 64, 64);
     const sphereMat = new THREE.MeshStandardMaterial({
       color: new THREE.Color("#F7F2E8"),
@@ -239,8 +253,7 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
       if (!container) return;
       const newW = container.clientWidth;
       const newH = container.clientHeight;
-      camera.aspect = newW / newH;
-      camera.updateProjectionMatrix();
+      updateCameraDistance(newW, newH);
       renderer.setSize(newW, newH);
     };
     window.addEventListener("resize", handleResize);
@@ -251,11 +264,11 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
 
     // 6. Animation Loop
     let animationFrameId: number;
-    const clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
+      const elapsedTime = (performance.now() - startTime) * 0.001;
 
       // Steady rotation with subtle interactive response if reduced-motion not active
       if (!prefersReducedMotion) {
@@ -295,10 +308,10 @@ export default function EarthCanvas({ className = "" }: EarthCanvasProps) {
     <div className={`relative flex items-center justify-center ${className}`}>
       <div
         ref={mountRef}
-        className="w-full h-full min-h-[360px] md:min-h-[520px] cursor-grab active:cursor-grabbing"
+        className="w-full aspect-square max-w-[460px] sm:max-w-[480px] cursor-grab active:cursor-grabbing flex items-center justify-center overflow-visible"
       />
       {/* Editorial Marker Tag */}
-      <div className="absolute bottom-4 left-6 pointer-events-none flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F5F0E6]/90 backdrop-blur-md border border-[#B08A3E]/30 text-xs font-mono text-[#25221D] shadow-sm">
+      <div className="absolute top-2 left-2 sm:top-3 sm:left-4 z-10 pointer-events-none flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F5F0E6]/95 backdrop-blur-md border border-[#B08A3E]/35 text-xs font-mono text-[#25221D] shadow-sm">
         <span className="inline-block w-2 h-2 rounded-full bg-[#B08A3E] animate-ping" />
         <span className="font-semibold tracking-wider text-[#806329]">HQ: SODEPUR, KOLKATA</span>
         <span className="text-gray-400">|</span>

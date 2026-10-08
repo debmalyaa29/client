@@ -89,7 +89,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
           </div>
 
           {/* Layer 2: Founder Cutout Portrait Card (Overlaid Composition) */}
-          <div className="relative z-10 w-full max-w-sm -mt-20 sm:-mt-24 bg-[#FBF8F1]/95 backdrop-blur-md border border-[#B08A3E]/35 rounded-xs p-4 shadow-lg flex items-center gap-4 transition-transform hover:-translate-y-1 duration-300">
+          <div className="relative z-10 w-full max-w-sm -mt-14 sm:-mt-16 bg-[#FBF8F1]/95 backdrop-blur-md border border-[#B08A3E]/35 rounded-xs p-4 shadow-lg flex items-center gap-4 transition-transform hover:-translate-y-1 duration-300">
             <div className="relative w-20 h-24 sm:w-24 sm:h-28 rounded-xs overflow-hidden shrink-0 border border-[#B08A3E]/40 bg-[#EAE0CD]">
               <Image
                 src={businessData.founder.photo}
