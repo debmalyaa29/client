@@ -73,6 +73,7 @@ export default function HomePage() {
 
       {/* Global Interactive Technical Inquiry Modal */}
       <InquiryModal
+        key={`${selectedMachine}-${inquiryModalOpen}`}
         isOpen={inquiryModalOpen}
         onClose={() => setInquiryModalOpen(false)}
         defaultMachine={selectedMachine}
