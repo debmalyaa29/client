@@ -26,14 +26,14 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
         {/* Left Column: Editorial Typography & Positioning (7 cols) */}
         <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
           {/* Architectural Heritage Badge */}
-          <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xs bg-[#EFE7D8] border border-[#B08A3E]/30 w-fit">
+          <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xs bg-[#EFE7D8] border border-[#B08A3E]/30 w-fit shadow-2xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#B08A3E]" />
             <span className="text-[11px] font-mono tracking-widest uppercase text-[#806329] font-semibold">
               Kolkata Rice Industrial Corridor • Sodepur Hub
             </span>
           </div>
 
-          {/* Signature Headline */}
+          {/* Signature Headline — Strictly Preserved Line Breaks & Editorial Hierarchy */}
           <div className="space-y-2">
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-normal tracking-tight text-[#25221D] leading-[1.08]">
               ENGINEERING THE <br />
@@ -49,7 +49,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
               onClick={() => onOpenInquiry("Complete Plant Inquiry")}
-              className="px-6 py-3.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-all duration-200 flex items-center gap-2 shadow-sm"
+              className="px-6 py-3.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] active:scale-[0.98] transition-all duration-200 flex items-center gap-2 shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
             >
               <span>Consult Engineering Desk</span>
               <ArrowUpRight className="w-4 h-4 text-[#D6BC7A]" />
@@ -57,18 +57,18 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
 
             <a
               href="#products"
-              className="px-6 py-3.5 bg-[#EFE7D8]/80 text-[#25221D] text-xs font-mono uppercase tracking-widest border border-[#25221D]/20 rounded-xs hover:bg-[#EAE0CD] transition-all duration-200 flex items-center gap-2"
+              className="px-6 py-3.5 bg-[#EFE7D8]/80 text-[#25221D] text-xs font-mono uppercase tracking-widest border border-[#25221D]/20 rounded-xs hover:bg-[#EAE0CD] active:scale-[0.98] transition-all duration-200 flex items-center gap-2 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
             >
               <span>Inspect Machinery Catalog</span>
               <span className="text-[#806329]">↓</span>
             </a>
           </div>
 
-          {/* Integrated Founder Citation & Key Metrics */}
-          <div className="pt-6 border-t border-[#25221D]/15 grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {/* Integrated Founder Citation & Key Metrics with Architectural Divider Rhythm */}
+          <div className="pt-6 border-t border-[#25221D]/15 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:divide-x sm:divide-[#25221D]/10">
             {businessData.stats.map((stat, idx) => (
-              <div key={idx} className="space-y-1">
-                <div className="font-serif text-2xl sm:text-3xl font-bold text-[#25221D] flex items-baseline gap-1">
+              <div key={idx} className={`space-y-1 ${idx > 0 ? "sm:pl-4" : ""}`}>
+                <div className="font-serif text-2xl sm:text-3xl font-bold text-[#25221D] flex items-baseline gap-1 tabular-nums">
                   <span>{stat.value}</span>
                   {stat.unit && <span className="text-xs font-mono font-normal text-[#806329]">{stat.unit}</span>}
                 </div>
@@ -130,7 +130,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
         </div>
         <a
           href="#business"
-          className="flex items-center gap-1.5 text-[#25221D] hover:text-[#B08A3E] transition-colors uppercase tracking-widest text-[11px]"
+          className="flex items-center gap-1.5 text-[#25221D] hover:text-[#B08A3E] transition-colors uppercase tracking-widest text-[11px] focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#B08A3E]"
         >
           <span>Scroll to Discover Story</span>
           <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
