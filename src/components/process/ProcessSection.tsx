@@ -50,13 +50,13 @@ export default function ProcessSection() {
           
           {/* Active Progress Gold Line */}
           <div
-            className="process-timeline-progress absolute top-1/2 left-0 h-[2px] bg-[#B08A3E] -translate-y-1/2 z-0 transition-all duration-300 hidden sm:block"
+            className="absolute top-1/2 left-0 h-[2px] bg-[#B08A3E] -translate-y-1/2 z-0 transition-all duration-300 hidden sm:block"
             style={{
               width: `${(activeStepIndex / (millingStepsData.length - 1)) * 100}%`,
             }}
           />
 
-          <div className="process-steps-row flex items-center justify-between min-w-[640px] sm:min-w-0 relative z-10 gap-2 sm:gap-0">
+          <div className="flex items-center justify-between min-w-[640px] sm:min-w-0 relative z-10 gap-2 sm:gap-0">
             {millingStepsData.map((step, idx) => {
               const isActive = idx === activeStepIndex;
               const isPast = idx < activeStepIndex;
@@ -64,7 +64,7 @@ export default function ProcessSection() {
                 <button
                   key={step.id}
                   onClick={() => handleStepChange(idx)}
-                  className={`process-step-btn flex flex-col items-center group transition-all p-2 rounded-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E] ${
+                  className={`flex flex-col items-center group transition-all p-2 rounded-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E] ${
                     isActive ? "scale-105" : "opacity-80 hover:opacity-100"
                   }`}
                   aria-label={`Step ${step.stepNumber}: ${step.title}`}
@@ -96,7 +96,7 @@ export default function ProcessSection() {
         {/* Active Stage Detailed Breakdown Panel */}
         <div
           ref={detailPanelRef}
-          className="process-detail-panel bg-[#FBF8F1] border border-[#B08A3E]/35 rounded-xs p-8 sm:p-10 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+          className="bg-[#FBF8F1] border border-[#B08A3E]/35 rounded-xs p-8 sm:p-10 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
         >
           
           {/* Left: Stage Overview & Mechanics (7 cols) */}
@@ -127,14 +127,11 @@ export default function ProcessSection() {
                 </div>
               </div>
 
-              {/* Output Discharge State — Deep Atlas Navy Technical Accent Highlight */}
-              <div className="p-4 rounded-xs bg-[#25221D] border border-[#0E1D61]/60 text-[#FBF8F1] space-y-1 relative overflow-hidden shadow-2xs">
-                <div className="absolute top-0 left-0 w-1 h-full bg-[#0E1D61]" />
-                <div className="text-[10px] font-mono uppercase tracking-wider text-[#D6BC7A] flex items-center gap-1.5 pl-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0E1D61]" />
-                  <span>OUTPUT DISCHARGE STATE</span>
+              <div className="p-4 rounded-xs bg-[#25221D] border border-[#B08A3E]/40 text-[#FBF8F1] space-y-1">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-[#D6BC7A]">
+                  OUTPUT DISCHARGE STATE
                 </div>
-                <div className="text-xs font-semibold text-[#FBF8F1] font-mono pl-1">
+                <div className="text-xs font-semibold text-[#FBF8F1] font-mono">
                   {activeStep.outputGrain}
                 </div>
               </div>

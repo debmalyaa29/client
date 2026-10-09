@@ -79,7 +79,7 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
             return (
               <div
                 key={sIdx}
-                className="turnkey-stage-card bg-[#FBF8F1] border border-[#25221D]/10 rounded-xs p-6 space-y-4 relative group hover:border-[#B08A3E]/60 transition-all duration-200 shadow-2xs hover:shadow-xs"
+                className="bg-[#FBF8F1] border border-[#25221D]/10 rounded-xs p-6 space-y-4 relative group hover:border-[#B08A3E]/60 transition-all duration-200 shadow-2xs hover:shadow-xs"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs text-[#B08A3E] font-bold">
@@ -105,7 +105,7 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
           {plantTiers.map((tier, tIdx) => (
             <div
               key={tIdx}
-              className={`plant-tier-card rounded-xs p-8 flex flex-col justify-between border transition-all duration-300 relative ${
+              className={`rounded-xs p-8 flex flex-col justify-between border transition-all duration-300 relative ${
                 tier.popular
                   ? "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E] shadow-md -translate-y-1 sm:-translate-y-2"
                   : "bg-[#FBF8F1] text-[#25221D] border-[#25221D]/15 hover:border-[#B08A3E]/50 hover:-translate-y-0.5"
