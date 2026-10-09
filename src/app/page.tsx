@@ -13,7 +13,6 @@ import ProcessSection from "@/components/process/ProcessSection";
 import WhyUsSection from "@/components/why-us/WhyUsSection";
 import ProjectsSection from "@/components/projects/ProjectsSection";
 import ContactSection from "@/components/contact/ContactSection";
-import ThreeUIExperimentSection from "@/components/motion/ThreeUIExperimentSection";
 import Footer from "@/components/footer/Footer";
 import InquiryModal from "@/components/contact/InquiryModal";
 
@@ -65,9 +64,6 @@ export default function HomePage() {
 
         {/* 8. Contact & Sodepur Engineering Desk Form */}
         <ContactSection />
-
-        {/* Experiment C: Isolated ThreeUI Motion & Hover Typography Experiment */}
-        <ThreeUIExperimentSection />
       </main>
 
       {/* 9. Quiet Deep Charcoal Footer */}
