@@ -7,7 +7,6 @@ import { isReducedMotion, isTouchDevice } from "@/lib/animation/tokens";
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const labelRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     // Strictly desktop-only & respect reduced-motion
@@ -15,7 +14,6 @@ export default function CustomCursor() {
 
     const dot = dotRef.current;
     const ring = ringRef.current;
-    const label = labelRef.current;
     if (!dot || !ring) return;
 
     // Add class to body to hide default pointer only when desktop cursor is active
@@ -54,7 +52,7 @@ export default function CustomCursor() {
     // Hover state management via event delegation (no React state updates!)
     const handleMouseOver = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest(
-        "a, button, [data-cursor], input, select, textarea"
+        "a, button, input, select, textarea"
       ) as HTMLElement | null;
 
       if (!target) {
@@ -67,63 +65,18 @@ export default function CustomCursor() {
           ease: "power2.out",
         });
         gsap.to(dot, { scale: 1, backgroundColor: "#B08A3E", duration: 0.2 });
-        if (label) gsap.to(label, { opacity: 0, scale: 0.8, duration: 0.15 });
         return;
       }
 
-      const cursorType = target.getAttribute("data-cursor");
-
-      if (cursorType === "explore") {
-        gsap.to(ring, {
-          scale: 2.2,
-          borderColor: "#B08A3E",
-          backgroundColor: "rgba(37, 34, 29, 0.85)",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-        gsap.to(dot, { scale: 0, duration: 0.2 });
-        if (label) {
-          label.textContent = "EXPLORE";
-          gsap.to(label, { opacity: 1, scale: 1, duration: 0.2 });
-        }
-      } else if (cursorType === "drag") {
-        gsap.to(ring, {
-          scale: 2.4,
-          borderColor: "#D6BC7A",
-          backgroundColor: "rgba(37, 34, 29, 0.85)",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-        gsap.to(dot, { scale: 0, duration: 0.2 });
-        if (label) {
-          label.textContent = "360° DRAG";
-          gsap.to(label, { opacity: 1, scale: 1, duration: 0.2 });
-        }
-      } else if (cursorType === "view") {
-        gsap.to(ring, {
-          scale: 2.0,
-          borderColor: "#B08A3E",
-          backgroundColor: "rgba(37, 34, 29, 0.85)",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-        gsap.to(dot, { scale: 0, duration: 0.2 });
-        if (label) {
-          label.textContent = "VIEW";
-          gsap.to(label, { opacity: 1, scale: 1, duration: 0.2 });
-        }
-      } else {
-        // Standard interactive link/button
-        gsap.to(ring, {
-          scale: 1.5,
-          borderColor: "#B08A3E",
-          backgroundColor: "rgba(176, 138, 62, 0.08)",
-          duration: 0.25,
-          ease: "power2.out",
-        });
-        gsap.to(dot, { scale: 0.7, backgroundColor: "#D6BC7A", duration: 0.2 });
-        if (label) gsap.to(label, { opacity: 0, scale: 0.8, duration: 0.15 });
-      }
+      // Standard interactive link/button
+      gsap.to(ring, {
+        scale: 1.4,
+        borderColor: "#B08A3E",
+        backgroundColor: "rgba(176, 138, 62, 0.08)",
+        duration: 0.25,
+        ease: "power2.out",
+      });
+      gsap.to(dot, { scale: 0.7, backgroundColor: "#D6BC7A", duration: 0.2 });
     };
 
     window.addEventListener("mousemove", onMouseMove);
@@ -154,12 +107,7 @@ export default function CustomCursor() {
         ref={ringRef}
         aria-hidden="true"
         className="pointer-events-none fixed top-0 left-0 z-9998 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full border border-[#B08A3E]/45 opacity-0 flex items-center justify-center transition-colors"
-      >
-        <span
-          ref={labelRef}
-          className="text-[9px] font-mono tracking-widest text-[#FBF8F1] uppercase font-bold opacity-0 scale-75 select-none pointer-events-none"
-        />
-      </div>
+      />
     </>
   );
 }

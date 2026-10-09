@@ -34,7 +34,6 @@ export default function ProjectsSection({ onOpenInquiry }: ProjectsSectionProps)
           {projectsData.map((project) => (
             <div
               key={project.id}
-              data-cursor="view"
               className="bg-[#FBF8F1] border border-[#25221D]/10 hover:border-[#B08A3E]/60 rounded-xs p-6 sm:p-10 shadow-xs transition-all duration-400 relative group overflow-hidden hover:-translate-y-0.5"
             >
               {/* Bottom Gold Reveal Line */}
