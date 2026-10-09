@@ -23,8 +23,8 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
     if (showcaseRef.current && !isReducedMotion()) {
       gsap.fromTo(
         showcaseRef.current,
-        { opacity: 0.35, y: 8 },
-        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }
+        { opacity: 0.3, y: 10 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
       );
     }
     setSelectedProductId(id);
@@ -61,15 +61,15 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                 <button
                   key={prod.id}
                   onClick={() => handleSelectProduct(prod.id)}
-                  className={`text-left p-4 rounded-xs border transition-all duration-200 flex items-center justify-between group active:scale-[0.99] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E] ${
+                  className={`text-left p-4 rounded-xs border transition-all duration-300 flex items-center justify-between group ${
                     isSelected
-                      ? "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E] border-l-4 border-l-[#B08A3E] shadow-xs translate-x-1"
+                      ? "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E] shadow-sm translate-x-1"
                       : "bg-[#FBF8F1] text-[#25221D] border-[#25221D]/10 hover:border-[#B08A3E]/40 hover:bg-[#EFE7D8]/60"
                   }`}
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className={`text-[10px] font-mono tracking-widest tabular-nums ${isSelected ? "text-[#D6BC7A]" : "text-[#806329]"}`}>
+                      <span className={`text-[10px] font-mono tracking-widest ${isSelected ? "text-[#D6BC7A]" : "text-[#806329]"}`}>
                         0{idx + 1} {"//"} {prod.modelCode}
                       </span>
                     </div>
@@ -148,7 +148,7 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                     {selectedProduct.specs.slice(0, 3).map((spec, sIdx) => (
                       <div key={sIdx} className="flex items-center justify-between text-xs py-1 border-b border-[#25221D]/5 font-mono">
                         <span className="text-[#635C52]">{spec.label}</span>
-                        <span className="font-semibold text-[#25221D] tabular-nums">{spec.value}</span>
+                        <span className="font-semibold text-[#25221D]">{spec.value}</span>
                       </div>
                     ))}
                   </div>
@@ -170,7 +170,7 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => onOpenInquiry(selectedProduct.name)}
-                  className="px-5 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] active:scale-[0.98] transition-all flex items-center gap-2 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
+                  className="px-5 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-colors flex items-center gap-2"
                 >
                   <span>Inquire Specifications</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-[#D6BC7A]" />
@@ -192,10 +192,10 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
               >
                 <button
                   onClick={() => setSelectedProductId(isExpanded ? "" : prod.id)}
-                  className="w-full p-4 flex items-center justify-between text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
+                  className="w-full p-4 flex items-center justify-between text-left"
                 >
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-[#806329] uppercase tabular-nums">
+                    <span className="text-[10px] font-mono text-[#806329] uppercase">
                       0{idx + 1} {"//"} {prod.modelCode}
                     </span>
                     <h4 className="font-serif text-lg font-bold text-[#25221D]">
@@ -227,14 +227,14 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                       {prod.specs.map((s, si) => (
                         <div key={si} className="flex justify-between text-[11px] font-mono py-1 border-b border-[#25221D]/5">
                           <span className="text-[#635C52]">{s.label}</span>
-                          <span className="font-semibold text-[#25221D] tabular-nums">{s.value}</span>
+                          <span className="font-semibold text-[#25221D]">{s.value}</span>
                         </div>
                       ))}
                     </div>
                     <div className="flex gap-2 pt-2">
                       <button
                         onClick={() => onOpenInquiry(prod.name)}
-                        className="flex-1 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider rounded-xs active:scale-[0.98] transition-transform flex items-center justify-center gap-1.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
+                        className="flex-1 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider rounded-xs flex items-center justify-center gap-1.5"
                       >
                         <span>Inquire</span>
                         <ArrowUpRight className="w-3.5 h-3.5 text-[#D6BC7A]" />

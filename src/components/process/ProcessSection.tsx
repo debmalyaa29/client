@@ -16,8 +16,8 @@ export default function ProcessSection() {
     if (detailPanelRef.current && !isReducedMotion()) {
       gsap.fromTo(
         detailPanelRef.current,
-        { opacity: 0.35, y: 10 },
-        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }
+        { opacity: 0.35, y: 12 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }
       );
     }
     setActiveStepIndex(newIndex);
@@ -64,15 +64,14 @@ export default function ProcessSection() {
                 <button
                   key={step.id}
                   onClick={() => handleStepChange(idx)}
-                  className={`flex flex-col items-center group transition-all p-2 rounded-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E] ${
+                  className={`flex flex-col items-center group transition-all p-2 rounded-xs focus:outline-hidden ${
                     isActive ? "scale-105" : "opacity-80 hover:opacity-100"
                   }`}
-                  aria-label={`Step ${step.stepNumber}: ${step.title}`}
                 >
                   <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold border-2 transition-all duration-200 tabular-nums ${
+                    className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold border-2 transition-all duration-300 ${
                       isActive
-                        ? "bg-[#25221D] text-[#D6BC7A] border-[#B08A3E] shadow-xs"
+                        ? "bg-[#25221D] text-[#D6BC7A] border-[#B08A3E] shadow-sm"
                         : isPast
                         ? "bg-[#EFE7D8] text-[#806329] border-[#B08A3E]"
                         : "bg-[#FBF8F1] text-[#635C52] border-[#25221D]/20 group-hover:border-[#B08A3E]"
@@ -103,7 +102,7 @@ export default function ProcessSection() {
           <div className="lg:col-span-7 space-y-6">
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#EFE7D8] border border-[#B08A3E]/30 rounded-xs text-xs font-mono text-[#806329] font-bold">
-                <span className="tabular-nums">STAGE {activeStep.stepNumber} OF 08</span>
+                <span>STAGE {activeStep.stepNumber} OF 08</span>
                 <span>•</span>
                 <span>{activeStep.machine}</span>
               </div>
@@ -142,14 +141,14 @@ export default function ProcessSection() {
               <button
                 disabled={activeStepIndex === 0}
                 onClick={() => handleStepChange(Math.max(0, activeStepIndex - 1))}
-                className="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#25221D]/20 bg-[#EFE7D8] disabled:opacity-30 hover:bg-[#EAE0CD] active:scale-[0.98] transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
+                className="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#25221D]/20 bg-[#EFE7D8] disabled:opacity-30 hover:bg-[#EAE0CD] transition-colors"
               >
                 ← Previous Stage
               </button>
               <button
                 disabled={activeStepIndex === millingStepsData.length - 1}
                 onClick={() => handleStepChange(Math.min(millingStepsData.length - 1, activeStepIndex + 1))}
-                className="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#B08A3E] bg-[#25221D] text-[#FBF8F1] disabled:opacity-30 hover:bg-[#38322A] active:scale-[0.98] transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
+                className="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#B08A3E] bg-[#25221D] text-[#FBF8F1] disabled:opacity-30 hover:bg-[#38322A] transition-colors"
               >
                 Next Stage →
               </button>
@@ -166,7 +165,7 @@ export default function ProcessSection() {
               <span className="text-[11px] font-mono uppercase tracking-widest text-[#806329] font-bold">
                 EFFICIENCY BENCHMARK
               </span>
-              <div className="font-serif text-5xl sm:text-6xl font-bold text-[#25221D] leading-none tabular-nums">
+              <div className="font-serif text-5xl sm:text-6xl font-bold text-[#25221D] leading-none">
                 {activeStep.keyMetric}
               </div>
               <div className="text-xs font-mono uppercase tracking-wider text-[#635C52]">

@@ -53,9 +53,30 @@ export default function ScrollChoreography() {
         });
       });
 
-      // 3. Grid Card Staggered Entrances (progressive subtle reveal without hiding content)
-      // Preserved native visibility to ensure zero layout flashing or missing cards
+      // 3. Grid Card Staggered Entrances
+      const cardContainers = [
+        "#business .grid.grid-cols-1.md\\:grid-cols-2",
+        "#solutions .grid.grid-cols-1.lg\\:grid-cols-3",
+        "#why-us .grid.grid-cols-1.md\\:grid-cols-2",
+      ];
 
+      cardContainers.forEach((selector) => {
+        const container = document.querySelector<HTMLElement>(selector);
+        if (!container || !container.children.length) return;
+
+        gsap.from(container.children, {
+          scrollTrigger: {
+            trigger: container,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+          y: travelDistance,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: "power3.out",
+        });
+      });
 
       // 4. Case Study Staggered Appearance
       const projectCards = document.querySelectorAll<HTMLElement>(

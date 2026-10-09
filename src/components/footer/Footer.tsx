@@ -48,6 +48,9 @@ export default function Footer() {
                 <a href="#products" className="hover:text-[#F5F0E6] transition-colors">Machinery Catalog</a>
               </li>
               <li>
+                <a href="#explorer" className="hover:text-[#F5F0E6] transition-colors">3D Mechanical Rig</a>
+              </li>
+              <li>
                 <a href="#solutions" className="hover:text-[#F5F0E6] transition-colors">Turnkey Solutions</a>
               </li>
             </ul>

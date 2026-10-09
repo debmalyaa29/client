@@ -35,7 +35,7 @@ export default function ProjectsSection({ onOpenInquiry }: ProjectsSectionProps)
             <div
               key={project.id}
               data-cursor="view"
-              className="bg-[#FBF8F1] border border-[#25221D]/10 hover:border-[#B08A3E]/60 rounded-xs p-6 sm:p-10 shadow-2xs hover:shadow-xs transition-all duration-300 relative group overflow-hidden hover:-translate-y-0.5"
+              className="bg-[#FBF8F1] border border-[#25221D]/10 hover:border-[#B08A3E]/60 rounded-xs p-6 sm:p-10 shadow-xs transition-all duration-400 relative group overflow-hidden hover:-translate-y-0.5"
             >
               {/* Bottom Gold Reveal Line */}
               <div className="absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full bg-[#B08A3E] transition-all duration-500 ease-out pointer-events-none" />
@@ -82,7 +82,7 @@ export default function ProjectsSection({ onOpenInquiry }: ProjectsSectionProps)
                       <TrendingUp className="w-4 h-4 text-[#B08A3E]" />
                       <span>MEASURED YIELD GAIN</span>
                     </span>
-                    <span className="font-serif text-xl font-bold text-[#25221D] tabular-nums">
+                    <span className="font-serif text-xl font-bold text-[#25221D]">
                       {project.yieldGain}
                     </span>
                   </div>
@@ -104,7 +104,7 @@ export default function ProjectsSection({ onOpenInquiry }: ProjectsSectionProps)
                   <div className="pt-3">
                     <button
                       onClick={() => onOpenInquiry(`Case Study: ${project.title}`)}
-                      className="w-full py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest rounded-xs border border-[#B08A3E]/50 hover:bg-[#342F28] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
+                      className="w-full py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest rounded-xs border border-[#B08A3E]/50 hover:bg-[#342F28] transition-colors flex items-center justify-center gap-1.5"
                     >
                       <span>Request Detailed Plant Audit</span>
                       <ArrowUpRight className="w-3.5 h-3.5 text-[#D6BC7A]" />
