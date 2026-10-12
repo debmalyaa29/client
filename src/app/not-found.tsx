@@ -33,7 +33,7 @@ export default function NotFound() {
         </blockquote>
 
         {/* Technical Coordinate Stamp */}
-        <div className="text-[11px] font-mono text-[#806329] tracking-widest uppercase">
+        <div className="text-xs font-mono text-[#806329] tracking-wider uppercase">
           CALCUTTA AGRI TECH • SODEPUR INDUSTRIAL CORRIDOR • KOLKATA 700113
         </div>
 
@@ -41,7 +41,7 @@ export default function NotFound() {
         <div className="pt-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-all duration-200 shadow-sm group"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-all duration-200 shadow-sm group focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
           >
             <ArrowLeft className="w-4 h-4 text-[#D6BC7A] transition-transform group-hover:-translate-x-1" />
             <span>Return to Plant Overview</span>
@@ -51,7 +51,7 @@ export default function NotFound() {
       </div>
 
       {/* Bottom Editorial Footer Marker */}
-      <div className="absolute bottom-6 left-0 right-0 text-center text-[10px] font-mono text-[#635C52] tracking-wider uppercase">
+      <div className="absolute bottom-6 left-0 right-0 text-center text-xs font-mono text-[#635C52] tracking-wider uppercase">
         Calcutta Agri Tech © 2026 • Precision Rice Milling Systems
       </div>
     </main>

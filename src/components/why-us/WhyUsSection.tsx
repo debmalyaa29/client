@@ -34,12 +34,9 @@ export default function WhyUsSection() {
         {/* Section Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-7 space-y-3">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#806329] font-semibold">
-              {"// SECTION 07 • INDUSTRIAL COMPETENCE"}
-            </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#25221D] leading-tight">
-              WHY LEADING PROCESSORS <br />
-              <span className="italic font-light text-[#806329]">CHOOSE CALCUTTA AGRI TECH.</span>
+              Why Leading Processors <br />
+              <span className="italic font-light text-[#806329]">Choose Calcutta Agri Tech.</span>
             </h2>
           </div>
           <div className="lg:col-span-5 text-[#635C52] text-sm sm:text-base leading-relaxed">
@@ -58,7 +55,7 @@ export default function WhyUsSection() {
                 <span className="font-serif text-3xl font-bold text-[#806329]">
                   {p.num}
                 </span>
-                <span className="text-[10px] font-mono tracking-widest uppercase text-[#B08A3E]">
+                <span className="text-xs font-mono tracking-wider uppercase text-[#B08A3E]">
                   STANDARD SPECIFICATION
                 </span>
               </div>

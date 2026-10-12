@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { businessData } from "@/data/business";
-import { Menu, X, ArrowUpRight, Phone } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 
 interface NavbarProps {
   onOpenInquiry: (machineName?: string) => void;
@@ -54,22 +54,20 @@ export default function Navbar({ onOpenInquiry }: NavbarProps) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Logo / Brand */}
         <Link href="#home" className="flex items-center gap-3 group">
           <div className="w-9 h-9 rounded-sm bg-[#25221D] flex items-center justify-center border border-[#B08A3E]/40 text-[#F5F0E6] font-serif text-lg font-semibold transition-transform duration-300 group-hover:scale-105">
             C
           </div>
           <div className="flex flex-col">
-            <span className="font-serif text-base sm:text-lg font-bold tracking-tight text-[#25221D] uppercase">
+            <span className="font-serif text-base sm:text-lg font-bold tracking-tight text-[#25221D]">
               {businessData.name}
             </span>
-            <span className="text-[10px] uppercase font-mono tracking-widest text-[#806329]">
+            <span className="text-xs font-mono tracking-wider text-[#806329]">
               Industrial Milling Systems • Sodepur
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
@@ -92,26 +90,16 @@ export default function Navbar({ onOpenInquiry }: NavbarProps) {
           })}
         </nav>
 
-        {/* Right CTA */}
         <div className="hidden sm:flex items-center gap-3">
-          <a
-            href={`tel:${businessData.contact.phone.replace(/\s+/g, "")}`}
-            className="hidden md:flex items-center gap-1.5 text-xs font-mono text-[#635C52] hover:text-[#25221D] px-2 py-1 transition-colors"
-          >
-            <Phone className="w-3.5 h-3.5 text-[#B08A3E]" />
-            <span>{businessData.contact.phone}</span>
-          </a>
-
           <button
             onClick={() => onOpenInquiry()}
-            className="flex items-center gap-2 px-4 py-2 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E]/60 rounded-xs hover:bg-[#342F28] transition-all duration-200 hover:shadow-sm"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-all duration-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden cursor-pointer"
           >
             <span>Inquire Now</span>
             <ArrowUpRight className="w-3.5 h-3.5 text-[#D6BC7A]" />
           </button>
         </div>
 
-        {/* Mobile menu trigger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="lg:hidden p-2 text-[#25221D] hover:text-[#B08A3E] focus:outline-hidden"
@@ -121,7 +109,6 @@ export default function Navbar({ onOpenInquiry }: NavbarProps) {
         </button>
       </div>
 
-      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-x-0 top-full bg-[#F5F0E6] border-b border-[#25221D]/15 shadow-xl px-6 py-6 flex flex-col gap-4 animate-in slide-in-from-top-2 duration-200">
           <div className="flex flex-col gap-1 divide-y divide-[#25221D]/10">
@@ -144,7 +131,7 @@ export default function Navbar({ onOpenInquiry }: NavbarProps) {
                 setMobileMenuOpen(false);
                 onOpenInquiry();
               }}
-              className="w-full py-3 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs flex items-center justify-center gap-2"
+              className="w-full py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider border border-[#B08A3E] rounded-xs flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden cursor-pointer"
             >
               <span>Consult Engineering Desk</span>
               <ArrowUpRight className="w-4 h-4 text-[#D6BC7A]" />

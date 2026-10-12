@@ -15,7 +15,7 @@ export default function LoadingScreen() {
   useEffect(() => {
     // If reduced-motion is requested or previously loaded in session, dismiss immediately
     if (isReducedMotion()) {
-      setLoading(false);
+      setTimeout(() => setLoading(false), 0);
       return;
     }
 
@@ -106,7 +106,7 @@ export default function LoadingScreen() {
           <div className="font-serif text-2xl sm:text-3xl tracking-wider text-[#FBF8F1] uppercase">
             Calcutta Agri Tech
           </div>
-          <div className="text-[10px] font-mono tracking-widest text-[#B08A3E] uppercase font-bold">
+          <div className="text-xs font-mono tracking-wider text-[#B08A3E] uppercase font-bold">
             Engineering • Precision • Industrial Scale
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function LoadingScreen() {
             />
           </div>
           
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#EFE7D8]/60">
+          <div className="flex items-center justify-between text-xs font-mono text-[#EFE7D8]/60">
             <span>CALIBRATING RIGS</span>
             <span ref={percentTextRef} className="text-[#D6BC7A] font-bold">
               00%
@@ -129,7 +129,7 @@ export default function LoadingScreen() {
         </div>
 
         {/* Coordinates Details */}
-        <div ref={coordsRef} className="opacity-0 text-[10px] font-mono text-[#806329] tracking-widest uppercase">
+        <div ref={coordsRef} className="opacity-0 text-xs font-mono text-[#806329] tracking-wider uppercase">
           HQ: Sodepur, Kolkata • Lat 22.71° N, Lon 88.38° E
         </div>
 

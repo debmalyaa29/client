@@ -48,12 +48,8 @@ export default function ContactSection() {
     <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#EFE7D8]/60 border-t border-[#25221D]/10">
       <div className="max-w-7xl mx-auto space-y-16">
         
-        {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-7 space-y-3">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#806329] font-semibold">
-              {"// SECTION 09 • ENGINEERING DESK"}
-            </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#25221D] leading-tight">
               LET&apos;S BUILD OR UPGRADE <br />
               <span className="italic font-light text-[#806329]">YOUR RICE MILL FACILITY.</span>
@@ -64,10 +60,8 @@ export default function ContactSection() {
           </div>
         </div>
 
-        {/* Contact Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
-          {/* Left: Verified Business Coordinates (5 cols) */}
           <div className="lg:col-span-5 bg-[#25221D] text-[#FBF8F1] rounded-xs p-8 sm:p-10 flex flex-col justify-between border border-[#B08A3E]/40 shadow-sm space-y-8">
             <div className="space-y-6">
               <div className="space-y-1">
@@ -122,27 +116,25 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* Direct WhatsApp Quick Consultation */}
             <div className="pt-6 border-t border-[#FBF8F1]/10">
               <a
                 href={`https://wa.me/${businessData.contact.whatsapp.replace(/[^0-9]/g, "")}?text=Hello%20Calcutta%20Agri%20Tech,%20I%20would%20like%20to%20inquire%20about%20rice%20mill%20machinery.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 bg-[#B08A3E] text-[#25221D] font-mono text-xs uppercase tracking-widest font-bold rounded-xs flex items-center justify-center gap-2 hover:bg-[#D6BC7A] transition-colors focus-visible:ring-2 focus-visible:ring-[#D6BC7A]"
+                className="w-full py-3 bg-[#EFE7D8] text-[#25221D] border border-[#B08A3E]/60 font-mono text-xs uppercase tracking-wider font-semibold rounded-xs flex items-center justify-center gap-2 hover:bg-[#E4D8C4] transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
               >
-                <MessageSquare className="w-4 h-4" />
+                <MessageSquare className="w-4 h-4 text-[#806329]" />
                 <span>Instant WhatsApp Technical Desk</span>
               </a>
             </div>
           </div>
 
-          {/* Right: Direct Inquiry Form (7 cols) */}
           <div className="lg:col-span-7 bg-[#FBF8F1] border border-[#25221D]/15 rounded-xs p-8 sm:p-10 shadow-xs flex flex-col justify-between">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-1">
-                <span className="text-xs font-mono uppercase tracking-wider text-[#806329] font-bold">
+              <div className="space-y-1.5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#EFE7D8] border border-[#B08A3E]/40 rounded-xs text-xs font-mono uppercase tracking-widest text-[#806329] font-bold w-fit">
                   TRANSMISSION FORM
-                </span>
+                </div>
                 <h3 className="font-serif text-2xl font-bold text-[#25221D]">
                   Request Quotation or Plant Inspection
                 </h3>
@@ -230,9 +222,7 @@ export default function ContactSection() {
                 />
               </div>
 
-              {/* Data Protection & Consent Notice */}
               <div className="space-y-3 pt-2 border-t border-[#25221D]/10">
-                {/* Optional Unbundled Marketing Consent Checkbox */}
                 <label className="flex items-start gap-2.5 cursor-pointer text-xs text-[#635C52]">
                   <input
                     type="checkbox"
@@ -245,8 +235,7 @@ export default function ContactSection() {
                   </span>
                 </label>
 
-                {/* Privacy Policy Acknowledgment */}
-                <p className="text-[11px] text-[#AFA698] leading-relaxed">
+                <p className="text-xs text-[#635C52] leading-relaxed">
                   By submitting this form, you acknowledge that your information will be processed in accordance with our{" "}
                   <Link href="/privacy-policy" className="text-[#806329] underline hover:text-[#25221D]">
                     Privacy Policy

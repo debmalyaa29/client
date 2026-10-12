@@ -4,7 +4,6 @@ import { checkRateLimit } from "@/lib/rate-limiter";
 
 export async function POST(req: NextRequest) {
   try {
-    // 1. Rate limiting by IP
     const ip = req.headers.get("x-forwarded-for") || "unknown-ip";
     const { allowed } = checkRateLimit(`inquiry:${ip}`, 5, 60000);
     if (!allowed) {
@@ -14,7 +13,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. Parse and validate input
     const body = await req.json();
     const { name, email, phone, machine, capacity, location, message } = body;
 
@@ -28,7 +26,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Please provide a valid contact phone number." }, { status: 400 });
     }
 
-    // Sanitize string inputs
     const sanitizedData = {
       name: name.trim().slice(0, 100),
       email: email.trim().toLowerCase().slice(0, 100),
@@ -40,14 +37,12 @@ export async function POST(req: NextRequest) {
       created_at: new Date().toISOString(),
     };
 
-    // 3. Database insertion via Supabase
     const supabase = getServerSupabase();
     const { error: dbError } = await supabase
       .from("inquiries")
       .insert([sanitizedData]);
 
     if (dbError) {
-      // Log server-side only without leaking details to response
       console.warn("Supabase inquiries table insert note:", dbError.message);
     }
 

@@ -37,12 +37,9 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-[#25221D]/15 pb-6">
           <div className="space-y-2">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#806329] font-semibold">
-              {"// SECTION 03 • MACHINERY LINEUP"}
-            </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#25221D] leading-tight">
-              PRECISION GRAIN PROCESSING <br />
-              <span className="italic font-light text-[#806329]">MACHINERY CATALOG.</span>
+              Precision Grain Processing <br />
+              <span className="italic font-light text-[#806329]">Machinery Catalog.</span>
             </h2>
           </div>
           <p className="text-xs sm:text-sm font-mono text-[#635C52] max-w-sm">
@@ -61,16 +58,16 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                 <button
                   key={prod.id}
                   onClick={() => handleSelectProduct(prod.id)}
-                  className={`text-left p-4 rounded-xs border transition-all duration-300 flex items-center justify-between group ${
+                  className={`text-left px-5 py-4.5 rounded-xs border transition-all duration-300 flex items-center justify-between group ${
                     isSelected
                       ? "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E] shadow-sm translate-x-1"
                       : "bg-[#FBF8F1] text-[#25221D] border-[#25221D]/10 hover:border-[#B08A3E]/40 hover:bg-[#EFE7D8]/60"
                   }`}
                 >
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     <div className="flex items-center gap-2">
-                      <span className={`text-[10px] font-mono tracking-widest ${isSelected ? "text-[#D6BC7A]" : "text-[#806329]"}`}>
-                        0{idx + 1} {"//"} {prod.modelCode}
+                      <span className={`text-xs font-mono tracking-wider ${isSelected ? "text-[#D6BC7A]" : "text-[#806329]"}`}>
+                        0{idx + 1} • {prod.modelCode}
                       </span>
                     </div>
                     <div className="font-serif text-base font-semibold leading-tight">
@@ -96,22 +93,27 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
             className="col-span-8 bg-[#FBF8F1] border border-[#B08A3E]/30 rounded-xs p-8 flex flex-col justify-between shadow-xs relative overflow-hidden"
           >
             {/* Top Gold Progress Indicator */}
-            <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#25221D]/10">
-              <div className="flex items-center gap-2 text-[11px] font-mono text-[#806329]">
-                <span className="font-bold">SPEC SHEET {selectedIndex + 1} OF {productsData.length}</span>
+            <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#25221D]/10 gap-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-mono font-bold text-[#806329] tracking-wider">
+                  SPEC SHEET {selectedIndex + 1} OF {productsData.length}
+                </span>
+                <div className="w-32 sm:w-44 h-2 bg-[#25221D]/15 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-[#B08A3E] transition-all duration-400 ease-out rounded-full"
+                    style={{ width: `${((selectedIndex + 1) / productsData.length) * 100}%` }}
+                  />
+                </div>
               </div>
-              <div className="w-36 h-1 bg-[#25221D]/10 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-[#B08A3E] transition-all duration-400 ease-out"
-                  style={{ width: `${((selectedIndex + 1) / productsData.length) * 100}%` }}
-                />
-              </div>
+              <span className="text-xs font-mono text-[#635C52] font-semibold">
+                {Math.round(((selectedIndex + 1) / productsData.length) * 100)}%
+              </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               
               {/* Product Visual */}
-              <div className="md:col-span-6 relative h-[320px] rounded-xs bg-[#EFE7D8]/40 border border-[#25221D]/10 flex items-center justify-center p-6 overflow-hidden group">
+              <div className="md:col-span-6 relative h-[320px] rounded-xs bg-[#EFE7D8]/40 border border-[#25221D]/10 flex items-center justify-center p-3 sm:p-4 overflow-hidden group">
                 <div className="relative w-full h-full transition-transform duration-500 group-hover:scale-105">
                   <Image
                     src={selectedProduct.image}
@@ -122,14 +124,14 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                     priority
                   />
                 </div>
-                <div className="absolute top-3 left-3 bg-[#25221D]/90 text-[#FBF8F1] text-[10px] font-mono px-2 py-1 rounded-xs tracking-wider">
+                <div className="absolute top-3 left-3 bg-[#25221D]/90 text-[#FBF8F1] text-xs font-mono px-2 py-1 rounded-xs tracking-wider">
                   MODEL: {selectedProduct.modelCode}
                 </div>
               </div>
 
               {/* Product Technical Details */}
               <div className="md:col-span-6 space-y-4">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-[#B08A3E] font-semibold">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#B08A3E] font-semibold">
                   {selectedProduct.category}
                 </span>
                 <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#25221D] leading-tight">
@@ -141,7 +143,7 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
 
                 {/* Key Technical Specs */}
                 <div className="space-y-2 pt-2 border-t border-[#25221D]/10">
-                  <div className="text-[11px] font-mono uppercase tracking-wider text-[#25221D] font-bold">
+                  <div className="text-xs font-mono uppercase tracking-wider text-[#25221D] font-bold">
                     SPECIFICATIONS SUMMARY
                   </div>
                   <div className="grid grid-cols-1 gap-1.5">
@@ -157,8 +159,8 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
             </div>
 
             {/* Bottom Actions Bar */}
-            <div className="pt-6 mt-6 border-t border-[#25221D]/10 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
+            <div className="pt-6 mt-6 border-t border-[#25221D]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-4">
                 {selectedProduct.features.slice(0, 2).map((feat, fIdx) => (
                   <div key={fIdx} className="flex items-center gap-1.5 text-xs text-[#25221D] font-sans">
                     <Check className="w-3.5 h-3.5 text-[#B08A3E] shrink-0" />
@@ -167,10 +169,10 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                 ))}
               </div>
 
-              <div className="flex items-center gap-3">
+              <div>
                 <button
                   onClick={() => onOpenInquiry(selectedProduct.name)}
-                  className="px-5 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-colors flex items-center gap-2"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden cursor-pointer"
                 >
                   <span>Inquire Specifications</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-[#D6BC7A]" />
@@ -195,8 +197,8 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                   className="w-full p-4 flex items-center justify-between text-left"
                 >
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-[#806329] uppercase">
-                      0{idx + 1} {"//"} {prod.modelCode}
+                    <span className="text-xs font-mono text-[#806329] uppercase">
+                      0{idx + 1} • {prod.modelCode}
                     </span>
                     <h4 className="font-serif text-lg font-bold text-[#25221D]">
                       {prod.name}
@@ -225,7 +227,7 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                     </p>
                     <div className="space-y-1">
                       {prod.specs.map((s, si) => (
-                        <div key={si} className="flex justify-between text-[11px] font-mono py-1 border-b border-[#25221D]/5">
+                        <div key={si} className="flex justify-between text-xs font-mono py-1 border-b border-[#25221D]/5">
                           <span className="text-[#635C52]">{s.label}</span>
                           <span className="font-semibold text-[#25221D]">{s.value}</span>
                         </div>
@@ -234,7 +236,7 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                     <div className="flex gap-2 pt-2">
                       <button
                         onClick={() => onOpenInquiry(prod.name)}
-                        className="flex-1 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider rounded-xs flex items-center justify-center gap-1.5"
+                        className="inline-flex items-center justify-center gap-2 flex-1 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden cursor-pointer"
                       >
                         <span>Inquire</span>
                         <ArrowUpRight className="w-3.5 h-3.5 text-[#D6BC7A]" />

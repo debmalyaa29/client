@@ -59,12 +59,9 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
         {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-7 space-y-3">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#806329] font-semibold">
-              {"// SECTION 05 • COMPLETE PLANT ENGINEERING"}
-            </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#25221D] leading-tight">
-              TURNKEY RICE MILL <br />
-              <span className="italic font-light text-[#806329]">SOLUTIONS & LAYOUTS.</span>
+              Turnkey Rice Mill <br />
+              <span className="italic font-light text-[#806329]">Solutions & Layouts.</span>
             </h2>
           </div>
           <div className="lg:col-span-5 text-[#635C52] text-sm sm:text-base leading-relaxed">
@@ -105,14 +102,14 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
           {plantTiers.map((tier, tIdx) => (
             <div
               key={tIdx}
-              className={`rounded-xs p-8 flex flex-col justify-between border transition-all duration-300 relative ${
+              className={`rounded-xs p-8 flex flex-col justify-between border transition-all duration-300 relative h-full ${
                 tier.popular
-                  ? "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E] shadow-md -translate-y-2"
-                  : "bg-[#FBF8F1] text-[#25221D] border-[#25221D]/15 hover:border-[#B08A3E]/40"
+                  ? "bg-[#25221D] text-[#FBF8F1] border-2 border-[#B08A3E] shadow-lg"
+                  : "bg-[#FBF8F1] text-[#25221D] border border-[#25221D]/15 hover:border-[#B08A3E]/40"
               }`}
             >
               {tier.popular && (
-                <div className="absolute -top-3 left-6 bg-[#B08A3E] text-[#25221D] text-[10px] font-mono uppercase tracking-widest font-bold px-3 py-1 rounded-xs">
+                <div className="absolute -top-3.5 left-6 bg-[#B08A3E] text-[#25221D] text-xs font-mono uppercase tracking-wider font-bold px-3 py-1 rounded-xs shadow-xs">
                   MOST COMMISSIONED SPECIFICATION
                 </div>
               )}
@@ -130,13 +127,13 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
                   </div>
                 </div>
 
-                <p className={`text-xs leading-relaxed ${tier.popular ? "text-[#AFA698]" : "text-[#635C52]"}`}>
+                <p className={`text-xs leading-relaxed min-h-[36px] ${tier.popular ? "text-[#AFA698]" : "text-[#635C52]"}`}>
                   {tier.target}
                 </p>
 
-                <div className={`space-y-2.5 pt-4 border-t ${tier.popular ? "border-[#FBF8F1]/10" : "border-[#25221D]/10"}`}>
+                <div className={`space-y-3 pt-4 border-t mt-2 ${tier.popular ? "border-[#FBF8F1]/10" : "border-[#25221D]/10"}`}>
                   {tier.features.map((feat, fIdx) => (
-                    <div key={fIdx} className="flex items-start gap-2 text-xs">
+                    <div key={fIdx} className="flex items-start gap-2.5 text-xs leading-relaxed">
                       <CheckCircle2 className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${tier.popular ? "text-[#D6BC7A]" : "text-[#B08A3E]"}`} />
                       <span className={tier.popular ? "text-[#EFE7D8]" : "text-[#25221D]"}>{feat}</span>
                     </div>
@@ -144,10 +141,10 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
                 </div>
               </div>
 
-              <div className="pt-8">
+              <div className="pt-8 mt-auto">
                 <button
                   onClick={() => onOpenInquiry(`Turnkey Solution (${tier.capacity})`)}
-                  className={`w-full py-3 text-xs font-mono uppercase tracking-widest rounded-xs border transition-colors flex items-center justify-center gap-2 ${
+                  className={`w-full py-3 text-xs font-mono uppercase tracking-wider rounded-xs border transition-colors flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden cursor-pointer ${
                     tier.popular
                       ? "bg-[#B08A3E] text-[#25221D] font-bold border-[#D6BC7A] hover:bg-[#D6BC7A]"
                       : "bg-[#25221D] text-[#FBF8F1] border-[#B08A3E]/60 hover:bg-[#342F28]"

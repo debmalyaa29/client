@@ -24,7 +24,6 @@ export default function InquiryModal({ isOpen, onClose, defaultMachine = "" }: I
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  // Keyboard accessibility: ESC to close
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -87,7 +86,7 @@ export default function InquiryModal({ isOpen, onClose, defaultMachine = "" }: I
         </button>
 
         <div className="space-y-1">
-          <span className="text-[10px] font-mono tracking-widest uppercase text-[#806329] font-bold">
+          <span className="text-xs font-mono tracking-wider uppercase text-[#806329] font-bold">
             CALCUTTA AGRI TECH • SODEPUR DESK
           </span>
           <h2 id="inquiry-modal-title" className="font-serif text-2xl font-bold text-[#25221D]">
@@ -195,9 +194,8 @@ export default function InquiryModal({ isOpen, onClose, defaultMachine = "" }: I
             />
           </div>
 
-          {/* Privacy & Optional Consent */}
           <div className="space-y-2 pt-1 border-t border-[#25221D]/10">
-            <label className="flex items-start gap-2 cursor-pointer text-[11px] text-[#635C52]">
+            <label className="flex items-start gap-2 cursor-pointer text-xs text-[#635C52]">
               <input
                 type="checkbox"
                 checked={formData.marketingConsent}
@@ -207,7 +205,7 @@ export default function InquiryModal({ isOpen, onClose, defaultMachine = "" }: I
               <span>Send me technical updates on milling components and spares availability (optional).</span>
             </label>
 
-            <p className="text-[10px] text-[#AFA698] leading-tight">
+            <p className="text-xs text-[#635C52] leading-tight">
               Inquiry data is processed in accordance with our{" "}
               <Link href="/privacy-policy" className="text-[#806329] underline hover:text-[#25221D]">
                 Privacy Policy

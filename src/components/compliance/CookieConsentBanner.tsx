@@ -13,7 +13,7 @@ export interface CookiePreferences {
 const STORAGE_KEY = "cat_cookie_consent";
 
 export default function CookieConsentBanner() {
-  const [hasChosen, setHasChosen] = useState<boolean>(true); // default true to avoid hydration flicker
+  const [hasChosen, setHasChosen] = useState<boolean>(true);
   const [showPreferences, setShowPreferences] = useState<boolean>(false);
   const [preferences, setPreferences] = useState<CookiePreferences>({
     essential: true,
@@ -22,26 +22,28 @@ export default function CookieConsentBanner() {
   });
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setPreferences(parsed);
-        setHasChosen(true);
-      } else {
+    const timer = setTimeout(() => {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          setPreferences(parsed);
+          setHasChosen(true);
+        } else {
+          setHasChosen(false);
+        }
+      } catch {
         setHasChosen(false);
       }
-    } catch {
-      setHasChosen(false);
-    }
+    }, 0);
 
-    // Listen for custom event from footer or cookie policy page to reopen preferences
     const handleOpenPreferences = () => {
       setShowPreferences(true);
     };
 
     window.addEventListener("cat_open_cookie_preferences", handleOpenPreferences);
     return () => {
+      clearTimeout(timer);
       window.removeEventListener("cat_open_cookie_preferences", handleOpenPreferences);
     };
   }, []);
@@ -50,13 +52,11 @@ export default function CookieConsentBanner() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
     } catch {
-      // Storage unavailable fallback
     }
     setPreferences(prefs);
     setHasChosen(true);
     setShowPreferences(false);
 
-    // Dispatch event so other components or services can adapt if needed
     window.dispatchEvent(
       new CustomEvent("cat_cookie_consent_updated", { detail: prefs })
     );
@@ -83,33 +83,30 @@ export default function CookieConsentBanner() {
   const handleSavePreferences = () => {
     saveConsent({
       ...preferences,
-      essential: true, // Always required
+      essential: true,
       timestamp: new Date().toISOString(),
     });
   };
 
   return (
     <>
-      {/* 1. Cookie Consent Banner (shown if no choice recorded yet) */}
       {!hasChosen && !showPreferences && (
         <aside
           role="region"
           aria-label="Cookie and Privacy Consent"
-          className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6 bg-[#25221D]/98 text-[#F5F0E6] border-t-2 border-[#B08A3E] shadow-2xl backdrop-blur-md animate-in slide-in-from-bottom-4 duration-300"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 max-w-lg w-[calc(100%-2rem)] p-5 bg-[#25221D]/95 text-[#F5F0E6] border border-[#B08A3E]/40 rounded-xs shadow-2xl backdrop-blur-md animate-in fade-in slide-in-from-bottom-4 duration-300"
         >
-          <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-            {/* Context Text */}
-            <div className="space-y-2 max-w-3xl">
+          <div className="flex flex-col gap-3">
+            <div className="space-y-1.5">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-[#D6BC7A]" />
                 <span className="text-xs font-mono uppercase tracking-widest text-[#D6BC7A] font-bold">
                   Privacy & Cookie Governance
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-[#AFA698] font-sans leading-relaxed">
-                Calcutta Agri Tech uses strictly necessary technical storage to ensure basic site
-                security and form transmissions. We respect your autonomy: non-essential performance
-                tracking requires your affirmative consent and is disabled by default. Read our{" "}
+              <p className="text-xs text-[#AFA698] font-sans leading-relaxed">
+                Calcutta Agri Tech uses strictly necessary storage for basic security. Non-essential performance
+                tracking requires affirmative consent. Read our{" "}
                 <Link
                   href="/cookie-policy"
                   className="text-[#D6BC7A] underline hover:text-[#FBF8F1] focus-visible:ring-1 focus-visible:ring-[#D6BC7A]"
@@ -122,25 +119,23 @@ export default function CookieConsentBanner() {
                   className="text-[#D6BC7A] underline hover:text-[#FBF8F1] focus-visible:ring-1 focus-visible:ring-[#D6BC7A]"
                 >
                   Privacy Policy
-                </Link>{" "}
-                to learn more.
+                </Link>.
               </p>
             </div>
 
-            {/* Action Buttons (Equal visual balance, no dark patterns) */}
-            <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto shrink-0">
+            <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-[#F5F0E6]/10">
               <button
                 type="button"
                 onClick={handleRejectNonEssential}
-                className="flex-1 sm:flex-initial px-4 py-2.5 bg-transparent text-[#F5F0E6] text-xs font-mono uppercase tracking-wider border border-[#F5F0E6]/30 hover:border-[#F5F0E6] hover:bg-[#F5F0E6]/10 rounded-xs transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
+                className="flex-1 px-3 py-2 bg-transparent text-[#F5F0E6] text-xs font-mono uppercase tracking-wider border border-[#F5F0E6]/30 hover:border-[#F5F0E6] hover:bg-[#F5F0E6]/10 rounded-xs transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
               >
-                Reject Non-Essential
+                Reject
               </button>
 
               <button
                 type="button"
                 onClick={() => setShowPreferences(true)}
-                className="flex-1 sm:flex-initial px-4 py-2.5 bg-[#342F28] text-[#D6BC7A] text-xs font-mono uppercase tracking-wider border border-[#B08A3E]/50 hover:bg-[#433C33] rounded-xs transition-colors flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
+                className="flex-1 px-3 py-2 bg-[#342F28] text-[#D6BC7A] text-xs font-mono uppercase tracking-wider border border-[#B08A3E]/50 hover:bg-[#433C33] rounded-xs transition-colors flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
               >
                 <Settings2 className="w-3.5 h-3.5" />
                 <span>Preferences</span>
@@ -149,7 +144,7 @@ export default function CookieConsentBanner() {
               <button
                 type="button"
                 onClick={handleAcceptAll}
-                className="w-full sm:w-auto px-5 py-2.5 bg-[#B08A3E] text-[#25221D] font-bold text-xs font-mono uppercase tracking-wider border border-[#D6BC7A] hover:bg-[#D6BC7A] rounded-xs transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden shadow-xs"
+                className="w-full sm:w-auto flex-1 px-4 py-2 bg-[#B08A3E] text-[#25221D] font-bold text-xs font-mono uppercase tracking-wider border border-[#D6BC7A] hover:bg-[#D6BC7A] rounded-xs transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden shadow-xs"
               >
                 Accept All
               </button>
@@ -158,7 +153,6 @@ export default function CookieConsentBanner() {
         </aside>
       )}
 
-      {/* 2. Granular Cookie Preferences Modal */}
       {showPreferences && (
         <div
           role="dialog"
@@ -167,7 +161,6 @@ export default function CookieConsentBanner() {
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#25221D]/80 backdrop-blur-xs animate-in fade-in duration-200"
         >
           <div className="bg-[#FBF8F1] border border-[#B08A3E]/50 rounded-xs max-w-lg w-full p-6 sm:p-8 shadow-2xl relative space-y-6 text-[#25221D]">
-            {/* Close button */}
             <button
               type="button"
               onClick={() => setShowPreferences(false)}
@@ -177,9 +170,8 @@ export default function CookieConsentBanner() {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Header */}
             <div className="space-y-1">
-              <span className="text-[10px] font-mono tracking-widest uppercase text-[#806329] font-bold">
+              <span className="text-xs font-mono tracking-wider uppercase text-[#806329] font-bold">
                 CALCUTTA AGRI TECH • PREFERENCE CENTER
               </span>
               <h2 id="cookie-preferences-title" className="font-serif text-2xl font-bold text-[#25221D]">
@@ -191,16 +183,14 @@ export default function CookieConsentBanner() {
               </p>
             </div>
 
-            {/* Granular Toggles */}
             <div className="space-y-4 divide-y divide-[#25221D]/10 text-xs">
-              {/* Category 1: Strictly Necessary */}
               <div className="pt-3 first:pt-0 space-y-1.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="font-mono uppercase font-bold text-[#25221D]">
                       Strictly Necessary Storage
                     </span>
-                    <span className="text-[10px] font-mono uppercase bg-[#25221D] text-[#D6BC7A] px-2 py-0.5 rounded-xs">
+                    <span className="text-xs font-mono uppercase bg-[#25221D] text-[#D6BC7A] px-2 py-0.5 rounded-xs">
                       Always Active
                     </span>
                   </div>
@@ -215,14 +205,13 @@ export default function CookieConsentBanner() {
                 </p>
               </div>
 
-              {/* Category 2: Analytics & Performance */}
               <div className="pt-3 space-y-1.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="font-mono uppercase font-bold text-[#25221D]">
                       Analytics & Performance
                     </span>
-                    <span className="text-[10px] font-mono uppercase text-[#806329]">
+                    <span className="text-xs font-mono uppercase text-[#806329]">
                       Optional
                     </span>
                   </div>
@@ -247,7 +236,6 @@ export default function CookieConsentBanner() {
               </div>
             </div>
 
-            {/* Action buttons */}
             <div className="pt-4 border-t border-[#25221D]/10 flex flex-col sm:flex-row gap-3">
               <button
                 type="button"
@@ -271,9 +259,6 @@ export default function CookieConsentBanner() {
   );
 }
 
-/**
- * Utility helper for components (like Footer or Cookie Policy page) to trigger the preferences dialog.
- */
 export function triggerOpenCookiePreferences() {
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent("cat_open_cookie_preferences"));

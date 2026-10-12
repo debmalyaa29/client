@@ -27,49 +27,24 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#F5F0E6] text-[#25221D] flex flex-col font-sans selection:bg-[#B08A3E] selection:text-[#FBF8F1]">
-      {/* Cinematic Precision Brand Loader */}
       <LoadingScreen />
-
-      {/* Desktop Precision GSAP Cursor */}
       <CustomCursor />
-
-      {/* Cinematic Scroll Choreography Engine */}
       <ScrollChoreography />
-
-      {/* Top Fixed Navigation */}
       <Navbar onOpenInquiry={handleOpenInquiry} />
 
-      {/* Main Single-Story Cinematic Flow */}
       <main id="main-content" className="flex-1">
-        {/* 1. Hero with 3D Earth & Founder */}
         <HeroSection onOpenInquiry={handleOpenInquiry} />
-
-        {/* 2. Business Principles & Founder Philosophy */}
         <BusinessSection />
-
-        {/* 3. Machinery Catalog with Horizontal Expanding Panels */}
         <ProductGallery onOpenInquiry={handleOpenInquiry} />
-
-        {/* 4. Complete Rice Mill Turnkey Solutions */}
         <SolutionsSection onOpenInquiry={handleOpenInquiry} />
-
-        {/* 5. 8-Stage Interactive Rice Milling Process */}
         <ProcessSection />
-
-        {/* 6. Why Choose Us / Industrial Competence */}
         <WhyUsSection />
-
-        {/* 7. Commissioned Project Installations & Case Studies */}
         <ProjectsSection onOpenInquiry={handleOpenInquiry} />
-
-        {/* 8. Contact & Sodepur Engineering Desk Form */}
         <ContactSection />
       </main>
 
-      {/* 9. Quiet Deep Charcoal Footer */}
       <Footer />
 
-      {/* Global Interactive Technical Inquiry Modal */}
       <InquiryModal
         key={`${selectedMachine}-${inquiryModalOpen}`}
         isOpen={inquiryModalOpen}

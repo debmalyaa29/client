@@ -16,9 +16,6 @@ export default function ProjectsSection({ onOpenInquiry }: ProjectsSectionProps)
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-[#25221D]/15 pb-6">
           <div className="space-y-3">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#806329] font-semibold">
-              {"// SECTION 08 • COMMISSIONED INSTALLATIONS"}
-            </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#25221D] leading-tight">
               PROVEN PERFORMANCE <br />
               <span className="italic font-light text-[#806329]">COMMISSIONED CASE STUDIES.</span>
@@ -72,10 +69,20 @@ export default function ProjectsSection({ onOpenInquiry }: ProjectsSectionProps)
                       {project.scope}
                     </p>
                   </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={() => onOpenInquiry(`Case Study: ${project.title}`)}
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider rounded-xs border border-[#B08A3E] hover:bg-[#342F28] transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
+                    >
+                      <span>Request Detailed Plant Audit</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-[#D6BC7A]" />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Right Metrics & Equipment Stack (5 cols) */}
-                <div className="lg:col-span-5 bg-[#EFE7D8]/50 border border-[#B08A3E]/30 rounded-xs p-6 space-y-4">
+                <div className="lg:col-span-5 bg-[#EFE7D8]/50 border border-[#B08A3E]/30 rounded-xs p-6 space-y-4 flex flex-col justify-between">
                   <div className="flex items-center justify-between border-b border-[#25221D]/10 pb-3">
                     <span className="text-xs font-mono uppercase tracking-wider text-[#806329] flex items-center gap-1.5">
                       <TrendingUp className="w-4 h-4 text-[#B08A3E]" />
@@ -87,7 +94,7 @@ export default function ProjectsSection({ onOpenInquiry }: ProjectsSectionProps)
                   </div>
 
                   <div className="space-y-2">
-                    <div className="text-[11px] font-mono uppercase tracking-wider text-[#25221D] font-bold">
+                    <div className="text-xs font-mono uppercase tracking-wider text-[#25221D] font-bold">
                       KEY COMMISSIONED RIGS:
                     </div>
                     <div className="space-y-1.5">
@@ -98,16 +105,6 @@ export default function ProjectsSection({ onOpenInquiry }: ProjectsSectionProps)
                         </div>
                       ))}
                     </div>
-                  </div>
-
-                  <div className="pt-3">
-                    <button
-                      onClick={() => onOpenInquiry(`Case Study: ${project.title}`)}
-                      className="w-full py-2.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest rounded-xs border border-[#B08A3E]/50 hover:bg-[#342F28] transition-colors flex items-center justify-center gap-1.5"
-                    >
-                      <span>Request Detailed Plant Audit</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-[#D6BC7A]" />
-                    </button>
                   </div>
                 </div>
 

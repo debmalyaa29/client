@@ -10,7 +10,6 @@ import Footer from "@/components/footer/Footer";
 export default function CookiePolicyPage() {
   return (
     <div className="min-h-screen bg-[#F5F0E6] text-[#25221D] flex flex-col font-sans selection:bg-[#B08A3E] selection:text-[#FBF8F1]">
-      {/* Top Header Navigation */}
       <header className="sticky top-0 z-40 bg-[#F5F0E6]/95 backdrop-blur-md border-b border-[#25221D]/10 py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <Link
@@ -21,17 +20,14 @@ export default function CookiePolicyPage() {
             <span>Return to Plant Overview</span>
           </Link>
 
-          <div className="text-[11px] font-mono uppercase tracking-widest text-[#806329]">
+          <div className="text-xs font-mono uppercase tracking-wider text-[#806329]">
             COOKIE & STORAGE GOVERNANCE
           </div>
         </div>
       </header>
 
-      {/* Main Document Body */}
       <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8">
         <article className="max-w-4xl mx-auto space-y-12">
-          
-          {/* Header */}
           <div className="space-y-4 border-b border-[#25221D]/15 pb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#EFE7D8] border border-[#B08A3E]/30 rounded-xs text-xs font-mono text-[#806329] font-bold">
               <Cookie className="w-3.5 h-3.5" />
@@ -49,7 +45,6 @@ export default function CookiePolicyPage() {
             </div>
           </div>
 
-          {/* Direct Preference Action Callout */}
           <div className="p-6 rounded-xs bg-[#FBF8F1] border border-[#B08A3E]/30 text-xs sm:text-sm text-[#635C52] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 leading-relaxed">
             <div className="space-y-1">
               <div className="font-mono uppercase font-bold text-[#25221D]">
@@ -69,7 +64,6 @@ export default function CookiePolicyPage() {
             </button>
           </div>
 
-          {/* Section 1 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               1. What Are Cookies and Local Storage?
@@ -82,7 +76,6 @@ export default function CookiePolicyPage() {
             </p>
           </section>
 
-          {/* Section 2 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               2. Inventory of Technologies Used on This Website
@@ -126,7 +119,6 @@ export default function CookiePolicyPage() {
             </div>
           </section>
 
-          {/* Section 3 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               3. Absence of Third-Party Advertising Trackers
@@ -136,7 +128,6 @@ export default function CookiePolicyPage() {
             </p>
           </section>
 
-          {/* Section 4 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               4. How to Control and Clear Storage via Browser
@@ -163,7 +154,6 @@ export default function CookiePolicyPage() {
             </p>
           </section>
 
-          {/* Section 5 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               5. Contacting Our Data Desk
@@ -191,7 +181,6 @@ export default function CookiePolicyPage() {
         </article>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

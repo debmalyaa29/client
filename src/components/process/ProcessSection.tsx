@@ -30,12 +30,9 @@ export default function ProcessSection() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#25221D]/15 pb-6">
           <div className="space-y-3">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#806329] font-semibold">
-              {"// SECTION 06 • GRAIN METALLURGY & TRANSFORMATION"}
-            </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#25221D] leading-tight">
-              THE 8-STAGE INTERACTIVE <br />
-              <span className="italic font-light text-[#806329]">RICE MILLING PROCESS.</span>
+              The 8-Stage Interactive <br />
+              <span className="italic font-light text-[#806329]">Rice Milling Process.</span>
             </h2>
           </div>
           <p className="text-xs sm:text-sm font-mono text-[#635C52] max-w-sm">
@@ -44,32 +41,41 @@ export default function ProcessSection() {
         </div>
 
         {/* Gold Horizontal Timeline Indicator */}
-        <div className="relative py-4 overflow-x-auto">
+        <div className="relative py-6 overflow-x-auto">
           {/* Background Connecting Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-[#25221D]/15 -translate-y-1/2 z-0 hidden sm:block" />
+          <div className="absolute top-[28px] left-0 right-0 h-[2px] bg-[#25221D]/15 z-0 hidden sm:block" />
           
           {/* Active Progress Gold Line */}
           <div
-            className="absolute top-1/2 left-0 h-[2px] bg-[#B08A3E] -translate-y-1/2 z-0 transition-all duration-300 hidden sm:block"
+            className="absolute top-[28px] left-0 h-[2px] bg-[#B08A3E] z-0 transition-all duration-300 hidden sm:block"
             style={{
               width: `${(activeStepIndex / (millingStepsData.length - 1)) * 100}%`,
             }}
           />
 
-          <div className="flex items-center justify-between min-w-[640px] sm:min-w-0 relative z-10 gap-2 sm:gap-0">
+          <div
+            role="tablist"
+            aria-label="Milling process stages"
+            className="flex items-center justify-between min-w-[720px] sm:min-w-0 relative z-10 gap-3 sm:gap-2 px-1"
+          >
             {millingStepsData.map((step, idx) => {
               const isActive = idx === activeStepIndex;
               const isPast = idx < activeStepIndex;
               return (
                 <button
                   key={step.id}
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-label={`Stage ${step.stepNumber}: ${step.title}`}
                   onClick={() => handleStepChange(idx)}
-                  className={`flex flex-col items-center group transition-all p-2 rounded-xs focus:outline-hidden ${
-                    isActive ? "scale-105" : "opacity-80 hover:opacity-100"
+                  className={`flex flex-col items-center group transition-all px-3 py-2 rounded-sm border cursor-pointer focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden ${
+                    isActive
+                      ? "bg-[#EFE7D8] border-[#B08A3E] shadow-xs scale-105"
+                      : "bg-[#FBF8F1]/80 border-[#25221D]/15 hover:bg-[#EAE0CD]/70 hover:border-[#B08A3E]/50"
                   }`}
                 >
                   <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold border-2 transition-all duration-300 ${
+                    className={`w-11 h-11 rounded-full flex items-center justify-center font-mono text-xs font-bold border-2 transition-all duration-300 ${
                       isActive
                         ? "bg-[#25221D] text-[#D6BC7A] border-[#B08A3E] shadow-sm"
                         : isPast
@@ -80,7 +86,7 @@ export default function ProcessSection() {
                     {step.stepNumber}
                   </div>
                   <span
-                    className={`text-[10px] font-mono tracking-wider uppercase mt-2 text-center transition-colors ${
+                    className={`text-xs font-mono tracking-wider uppercase mt-2 text-center transition-colors ${
                       isActive ? "text-[#25221D] font-bold" : "text-[#635C52]"
                     }`}
                   >
@@ -118,7 +124,7 @@ export default function ProcessSection() {
             {/* Grain Flow Transformation Matrix */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="p-4 rounded-xs bg-[#EFE7D8]/50 border border-[#25221D]/10 space-y-1">
-                <div className="text-[10px] font-mono uppercase tracking-wider text-[#806329]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#806329]">
                   INPUT GRAIN STATUS
                 </div>
                 <div className="text-xs font-semibold text-[#25221D] font-mono">
@@ -126,11 +132,11 @@ export default function ProcessSection() {
                 </div>
               </div>
 
-              <div className="p-4 rounded-xs bg-[#25221D] border border-[#B08A3E]/40 text-[#FBF8F1] space-y-1">
-                <div className="text-[10px] font-mono uppercase tracking-wider text-[#D6BC7A]">
+              <div className="p-4 rounded-xs bg-[#EFE7D8]/80 border border-[#B08A3E]/40 text-[#25221D] space-y-1">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#806329] font-bold">
                   OUTPUT DISCHARGE STATE
                 </div>
-                <div className="text-xs font-semibold text-[#FBF8F1] font-mono">
+                <div className="text-xs font-semibold text-[#25221D] font-mono">
                   {activeStep.outputGrain}
                 </div>
               </div>
@@ -141,14 +147,14 @@ export default function ProcessSection() {
               <button
                 disabled={activeStepIndex === 0}
                 onClick={() => handleStepChange(Math.max(0, activeStepIndex - 1))}
-                className="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#25221D]/20 bg-[#EFE7D8] disabled:opacity-30 hover:bg-[#EAE0CD] transition-colors"
+                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#25221D]/40 bg-[#EFE7D8] text-[#25221D] font-semibold disabled:opacity-40 disabled:border-[#25221D]/20 hover:bg-[#E4D8C4] transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden cursor-pointer disabled:cursor-not-allowed"
               >
                 ← Previous Stage
               </button>
               <button
                 disabled={activeStepIndex === millingStepsData.length - 1}
                 onClick={() => handleStepChange(Math.min(millingStepsData.length - 1, activeStepIndex + 1))}
-                className="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#B08A3E] bg-[#25221D] text-[#FBF8F1] disabled:opacity-30 hover:bg-[#38322A] transition-colors"
+                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 text-xs font-mono uppercase tracking-wider rounded-xs border border-[#B08A3E] bg-[#25221D] text-[#FBF8F1] font-semibold disabled:opacity-40 hover:bg-[#38322A] transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden cursor-pointer disabled:cursor-not-allowed"
               >
                 Next Stage →
               </button>
@@ -162,7 +168,7 @@ export default function ProcessSection() {
             </div>
             
             <div className="space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-widest text-[#806329] font-bold">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#806329] font-bold">
                 EFFICIENCY BENCHMARK
               </span>
               <div className="font-serif text-5xl sm:text-6xl font-bold text-[#25221D] leading-none">

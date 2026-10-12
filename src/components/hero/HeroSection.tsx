@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import EarthCanvas from "@/components/3d/EarthCanvas";
 import { businessData } from "@/data/business";
-import { ArrowDown, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { isReducedMotion } from "@/lib/animation/tokens";
 
 interface HeroSectionProps {
@@ -20,7 +19,6 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
   const ctaRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const earthColRef = useRef<HTMLDivElement>(null);
-  const founderCardRef = useRef<HTMLDivElement>(null);
   const bottomScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -94,20 +92,6 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
         );
       }
 
-      // 6. Founder Portrait Card
-      if (founderCardRef.current) {
-        tl.from(
-          founderCardRef.current,
-          {
-            y: 30,
-            opacity: 0,
-            duration: 1.0,
-            ease: "power2.out",
-          },
-          "-=0.7"
-        );
-      }
-
       // 7. Stats grid
       if (statsRef.current) {
         tl.from(
@@ -155,7 +139,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
           {/* Architectural Heritage Badge */}
           <div ref={badgeRef} className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xs bg-[#EFE7D8] border border-[#B08A3E]/30 w-fit">
             <span className="w-1.5 h-1.5 rounded-full bg-[#B08A3E]" />
-            <span className="text-[11px] font-mono tracking-widest uppercase text-[#806329] font-semibold">
+            <span className="text-xs font-mono tracking-wider text-[#806329] font-semibold">
               Kolkata Rice Industrial Corridor • Sodepur Hub
             </span>
           </div>
@@ -163,9 +147,9 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
           {/* Signature Headline */}
           <div className="space-y-2">
             <h1 ref={titleRef} className="font-serif text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-normal tracking-tight text-[#25221D] leading-[1.08]">
-              ENGINEERING THE <br />
-              <span className="italic font-light text-[#806329]">FUTURE</span> OF <br />
-              RICE MILLING.
+              Engineering the <br />
+              <span className="italic font-light text-[#806329]">Future</span> of <br />
+              Rice Milling.
             </h1>
             <p ref={descRef} className="max-w-xl text-base sm:text-lg text-[#635C52] font-sans leading-relaxed pt-2">
               Calcutta Agri Tech delivers high-yield grain processing machinery, precision gravity destoners, and optical color sorters built to withstand industrial multi-shift operation.
@@ -176,7 +160,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
           <div ref={ctaRef} className="flex flex-wrap items-center gap-4 pt-2">
             <button
               onClick={() => onOpenInquiry("Complete Plant Inquiry")}
-              className="px-6 py-3.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-all duration-200 flex items-center gap-2 shadow-sm"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-wider border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-all duration-200 shadow-sm focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden cursor-pointer"
             >
               <span>Consult Engineering Desk</span>
               <ArrowUpRight className="w-4 h-4 text-[#D6BC7A]" />
@@ -184,7 +168,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
 
             <a
               href="#products"
-              className="px-6 py-3.5 bg-[#EFE7D8]/80 text-[#25221D] text-xs font-mono uppercase tracking-widest border border-[#25221D]/20 rounded-xs hover:bg-[#EAE0CD] transition-all duration-200 flex items-center gap-2"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#EFE7D8] text-[#25221D] text-xs font-mono uppercase tracking-wider border border-[#25221D]/20 rounded-xs hover:bg-[#E4D8C4] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden cursor-pointer"
             >
               <span>Inspect Machinery Catalog</span>
               <span className="text-[#806329]">↓</span>
@@ -199,7 +183,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
                   <span>{stat.value}</span>
                   {stat.unit && <span className="text-xs font-mono font-normal text-[#806329]">{stat.unit}</span>}
                 </div>
-                <div className="text-[11px] font-mono uppercase tracking-wider text-[#635C52] leading-tight">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#635C52] leading-tight">
                   {stat.label}
                 </div>
               </div>
@@ -207,44 +191,9 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* Right Column: Layered 3D Earth Globe + Founder Composition (5 cols) */}
-        <div ref={earthColRef} className="lg:col-span-5 relative flex flex-col items-center justify-center">
-          
-          {/* Layer 1: 3D Earth Interactive Canvas */}
-          <div className="w-full relative z-0 flex items-center justify-center">
-            <EarthCanvas className="w-full max-w-[480px] mx-auto" />
-          </div>
-
-          {/* Layer 2: Founder Cutout Portrait Card (Overlaid Composition) */}
-          <div ref={founderCardRef} className="relative z-10 w-full max-w-sm -mt-14 sm:-mt-16 bg-[#FBF8F1]/95 backdrop-blur-md border border-[#B08A3E]/35 rounded-xs p-4 shadow-lg flex items-center gap-4 transition-transform hover:-translate-y-1 duration-300">
-            <div className="relative w-20 h-24 sm:w-24 sm:h-28 rounded-xs overflow-hidden shrink-0 border border-[#B08A3E]/40 bg-[#EAE0CD]">
-              <Image
-                src={businessData.founder.photo}
-                alt={`${businessData.founder.name}, ${businessData.founder.role}`}
-                fill
-                className="object-cover object-top"
-                sizes="(max-width: 768px) 96px, 112px"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#25221D]/40 via-transparent to-transparent" />
-            </div>
-
-            <div className="flex flex-col space-y-1">
-              <span className="text-[10px] font-mono tracking-widest uppercase text-[#B08A3E] font-bold">
-                FOUNDER & CHIEF ENGINEER
-              </span>
-              <h3 className="font-serif text-lg sm:text-xl font-bold text-[#25221D] leading-tight">
-                {businessData.founder.name}
-              </h3>
-              <p className="text-xs text-[#635C52] font-sans line-clamp-2 leading-relaxed">
-                Spearheading modern rice milling automation & grain recovery engineering across Bengal.
-              </p>
-              <div className="flex items-center gap-1.5 pt-1 text-[11px] font-mono text-[#806329]">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#B08A3E]" />
-                <span>On-Site Factory Consultation</span>
-              </div>
-            </div>
-          </div>
+        {/* Right Column: Clean 3D Earth Globe (5 cols) */}
+        <div ref={earthColRef} className="lg:col-span-5 relative flex items-center justify-center">
+          <EarthCanvas className="w-full max-w-[480px] mx-auto" />
         </div>
 
       </div>
@@ -257,10 +206,11 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
         </div>
         <a
           href="#business"
-          className="flex items-center gap-1.5 text-[#25221D] hover:text-[#B08A3E] transition-colors uppercase tracking-widest text-[11px]"
+          aria-label="Scroll to discover business story"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider text-[#25221D] font-semibold hover:text-[#806329] hover:bg-[#EFE7D8]/80 transition-colors focus-visible:ring-2 focus-visible:ring-[#B08A3E]"
         >
           <span>Scroll to Discover Story</span>
-          <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
+          <ArrowDown className="w-4 h-4 text-[#806329] animate-bounce" />
         </a>
       </div>
     </section>

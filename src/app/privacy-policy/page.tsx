@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-[#F5F0E6] text-[#25221D] flex flex-col font-sans selection:bg-[#B08A3E] selection:text-[#FBF8F1]">
-      {/* Top Header Navigation */}
       <header className="sticky top-0 z-40 bg-[#F5F0E6]/95 backdrop-blur-md border-b border-[#25221D]/10 py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <Link
@@ -24,17 +23,14 @@ export default function PrivacyPolicyPage() {
             <span>Return to Plant Overview</span>
           </Link>
 
-          <div className="text-[11px] font-mono uppercase tracking-widest text-[#806329]">
+          <div className="text-xs font-mono uppercase tracking-widest text-[#806329]">
             GOVERNANCE & COMPLIANCE
           </div>
         </div>
       </header>
 
-      {/* Main Document Body */}
       <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8">
         <article className="max-w-4xl mx-auto space-y-12">
-          
-          {/* Header */}
           <div className="space-y-4 border-b border-[#25221D]/15 pb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#EFE7D8] border border-[#B08A3E]/30 rounded-xs text-xs font-mono text-[#806329] font-bold">
               <ShieldCheck className="w-3.5 h-3.5" />
@@ -52,7 +48,6 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          {/* Policy Overview Callout */}
           <div className="p-6 rounded-xs bg-[#FBF8F1] border border-[#B08A3E]/30 text-xs sm:text-sm text-[#635C52] space-y-2 leading-relaxed">
             <div className="font-mono uppercase font-bold text-[#25221D]">
               Summary of Our Industrial Privacy Commitment
@@ -62,7 +57,6 @@ export default function PrivacyPolicyPage() {
             </p>
           </div>
 
-          {/* Section 1 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               1. Information We Collect
@@ -83,7 +77,6 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
 
-          {/* Section 2 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               2. Purpose and Lawful Basis of Processing
@@ -107,7 +100,6 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
 
-          {/* Section 3 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               3. Data Storage, Security & Service Providers
@@ -120,7 +112,6 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          {/* Section 4 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               4. Data Retention and Deletion
@@ -130,7 +121,6 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          {/* Section 5 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               5. Cookies and Technical Storage
@@ -143,7 +133,6 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          {/* Section 6 */}
           <section className="space-y-4 text-xs sm:text-sm text-[#635C52] leading-relaxed">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#25221D]">
               6. Your Rights and Contact Information
@@ -176,7 +165,7 @@ export default function PrivacyPolicyPage() {
                   <span>{businessData.contact.phone}</span>
                 </div>
               </div>
-              <p className="text-[11px] text-[#AFA698] pt-2 border-t border-[#25221D]/10">
+              <p className="text-xs text-[#AFA698] pt-2 border-t border-[#25221D]/10">
                 Note for business owner: Formal corporate incorporation details (e.g. GSTIN / CIN) may be added upon formal administrative filing.
               </p>
             </div>
@@ -185,7 +174,6 @@ export default function PrivacyPolicyPage() {
         </article>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
