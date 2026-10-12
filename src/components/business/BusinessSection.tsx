@@ -60,7 +60,7 @@ export default function BusinessSection() {
               <div className="relative w-24 h-28 sm:w-28 sm:h-32 rounded-xs overflow-hidden border border-[#B08A3E]/40 mb-3 bg-[#EAE0CD]">
                 <Image
                   src={businessData.founder.photo}
-                  alt={businessData.founder.name}
+                  alt={`${businessData.founder.name}, ${businessData.founder.role}`}
                   fill
                   className="object-cover object-top"
                   sizes="128px"

@@ -4,12 +4,15 @@ import React, { useState } from "react";
 import { businessData } from "@/data/business";
 import { MapPin, Phone, Mail, Clock, MessageSquare, ArrowUpRight, CheckCircle2, AlertCircle } from "lucide-react";
 
+import Link from "next/link";
+
 export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
+    marketingConsent: false,
   });
   const [submitting, setSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
@@ -32,7 +35,7 @@ export default function ContactSection() {
       }
 
       setStatusMessage({ type: "success", text: data.message || "Thank you. Our engineering desk will connect shortly." });
-      setFormData({ name: "", email: "", phone: "", message: "" });
+      setFormData({ name: "", email: "", phone: "", message: "", marketingConsent: false });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Something went wrong. Please call our office directly.";
       setStatusMessage({ type: "error", text: msg });
@@ -93,7 +96,7 @@ export default function ContactSection() {
                   <Phone className="w-4 h-4 text-[#D6BC7A] shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-[#FBF8F1]">Direct Engineering Desk</div>
-                    <a href={`tel:${businessData.contact.phone.replace(/\s+/g, "")}`} className="text-[#D6BC7A] hover:underline">
+                    <a href={`tel:${businessData.contact.phone.replace(/\s+/g, "")}`} className="text-[#D6BC7A] hover:underline focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">
                       {businessData.contact.phone}
                     </a>
                   </div>
@@ -103,7 +106,7 @@ export default function ContactSection() {
                   <Mail className="w-4 h-4 text-[#D6BC7A] shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-[#FBF8F1]">Official Inquiries</div>
-                    <a href={`mailto:${businessData.contact.email}`} className="text-[#AFA698] hover:text-[#FBF8F1]">
+                    <a href={`mailto:${businessData.contact.email}`} className="text-[#AFA698] hover:text-[#FBF8F1] focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">
                       {businessData.contact.email}
                     </a>
                   </div>
@@ -125,7 +128,7 @@ export default function ContactSection() {
                 href={`https://wa.me/${businessData.contact.whatsapp.replace(/[^0-9]/g, "")}?text=Hello%20Calcutta%20Agri%20Tech,%20I%20would%20like%20to%20inquire%20about%20rice%20mill%20machinery.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 bg-[#B08A3E] text-[#25221D] font-mono text-xs uppercase tracking-widest font-bold rounded-xs flex items-center justify-center gap-2 hover:bg-[#D6BC7A] transition-colors"
+                className="w-full py-3 bg-[#B08A3E] text-[#25221D] font-mono text-xs uppercase tracking-widest font-bold rounded-xs flex items-center justify-center gap-2 hover:bg-[#D6BC7A] transition-colors focus-visible:ring-2 focus-visible:ring-[#D6BC7A]"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Instant WhatsApp Technical Desk</span>
@@ -143,6 +146,9 @@ export default function ContactSection() {
                 <h3 className="font-serif text-2xl font-bold text-[#25221D]">
                   Request Quotation or Plant Inspection
                 </h3>
+                <p className="text-xs text-[#635C52]">
+                  We collect your contact details solely to evaluate your milling requirements, prepare equipment estimates, and coordinate engineering support.
+                </p>
               </div>
 
               {statusMessage && (
@@ -164,66 +170,94 @@ export default function ContactSection() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-mono uppercase text-[#25221D] font-medium">
+                  <label htmlFor="contact-name" className="text-xs font-mono uppercase text-[#25221D] font-medium">
                     Full Name / Mill Name *
                   </label>
                   <input
+                    id="contact-name"
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Debabrata Dey / Bengal Rice Mill"
-                    className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:outline-hidden"
+                    className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-mono uppercase text-[#25221D] font-medium">
+                  <label htmlFor="contact-phone" className="text-xs font-mono uppercase text-[#25221D] font-medium">
                     Contact Phone Number *
                   </label>
                   <input
+                    id="contact-phone"
                     type="tel"
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+91 98300 XXXXX"
-                    className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:outline-hidden"
+                    className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-mono uppercase text-[#25221D] font-medium">
+                <label htmlFor="contact-email" className="text-xs font-mono uppercase text-[#25221D] font-medium">
                   Official Email Address *
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="contact@yourmill.com"
-                  className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:outline-hidden"
+                  className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-mono uppercase text-[#25221D] font-medium">
+                <label htmlFor="contact-message" className="text-xs font-mono uppercase text-[#25221D] font-medium">
                   Requirement Details (Machinery / Capacity / Plant Location) *
                 </label>
                 <textarea
+                  id="contact-message"
                   required
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Describe your raw paddy variety (e.g. Swarna / Minikit), existing plant capacity, or machines needed (Destoner, CCD Sortex, Turnkey Plant)..."
-                  className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus:outline-hidden resize-none"
+                  className="w-full px-3.5 py-2.5 bg-[#F5F0E6] border border-[#25221D]/20 rounded-xs text-xs font-mono text-[#25221D] focus:border-[#B08A3E] focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden resize-none"
                 />
+              </div>
+
+              {/* Data Protection & Consent Notice */}
+              <div className="space-y-3 pt-2 border-t border-[#25221D]/10">
+                {/* Optional Unbundled Marketing Consent Checkbox */}
+                <label className="flex items-start gap-2.5 cursor-pointer text-xs text-[#635C52]">
+                  <input
+                    type="checkbox"
+                    checked={formData.marketingConsent}
+                    onChange={(e) => setFormData({ ...formData, marketingConsent: e.target.checked })}
+                    className="mt-0.5 w-4 h-4 rounded-xs border-[#25221D]/30 text-[#806329] focus:ring-[#B08A3E]"
+                  />
+                  <span>
+                    Send me occasional technical updates and harvest-season machinery advisories from Calcutta Agri Tech (optional).
+                  </span>
+                </label>
+
+                {/* Privacy Policy Acknowledgment */}
+                <p className="text-[11px] text-[#AFA698] leading-relaxed">
+                  By submitting this form, you acknowledge that your information will be processed in accordance with our{" "}
+                  <Link href="/privacy-policy" className="text-[#806329] underline hover:text-[#25221D]">
+                    Privacy Policy
+                  </Link>. We never sell or share your contact details.
+                </p>
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3.5 bg-[#25221D] text-[#FBF8F1] text-xs font-mono uppercase tracking-widest border border-[#B08A3E] rounded-xs hover:bg-[#38322A] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-[#B08A3E] focus-visible:outline-hidden"
               >
                 <span>{submitting ? "Transmitting..." : "Submit Inquiry to Sodepur Desk"}</span>
                 <ArrowUpRight className="w-4 h-4 text-[#D6BC7A]" />

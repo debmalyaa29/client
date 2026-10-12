@@ -115,7 +115,7 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                 <div className="relative w-full h-full transition-transform duration-500 group-hover:scale-105">
                   <Image
                     src={selectedProduct.image}
-                    alt={selectedProduct.name}
+                    alt={`Calcutta Agri Tech ${selectedProduct.name} — ${selectedProduct.category}`}
                     fill
                     className="object-contain"
                     sizes="400px"
@@ -214,7 +214,7 @@ export default function ProductGallery({ onOpenInquiry }: ProductGalleryProps) {
                     <div className="relative h-48 w-full bg-[#EFE7D8]/40 rounded-xs flex items-center justify-center p-4">
                       <Image
                         src={prod.image}
-                        alt={prod.name}
+                        alt={`Calcutta Agri Tech ${prod.name} — ${prod.category}`}
                         fill
                         className="object-contain"
                         sizes="(max-width: 768px) 100vw, 300px"

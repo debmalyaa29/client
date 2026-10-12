@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import CookieConsentBanner from "@/components/compliance/CookieConsentBanner";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
@@ -45,7 +46,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${jakarta.variable} scroll-smooth`}>
       <body className="min-h-screen bg-[#F5F0E6] text-[#25221D] font-sans antialiased selection:bg-[#B08A3E] selection:text-[#FBF8F1]">
+        {/* Accessible Keyboard Skip Link */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#25221D] focus:text-[#FBF8F1] focus:border focus:border-[#B08A3E] focus:text-xs focus:font-mono focus:uppercase focus:shadow-lg focus:outline-hidden"
+        >
+          Skip to main content
+        </a>
         {children}
+        <CookieConsentBanner />
       </body>
     </html>
   );

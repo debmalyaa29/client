@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { businessData } from "@/data/business";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, ShieldCheck } from "lucide-react";
+import { triggerOpenCookiePreferences } from "@/components/compliance/CookieConsentBanner";
 
 export default function Footer() {
   return (
@@ -12,8 +14,8 @@ export default function Footer() {
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#F5F0E6]/10">
           
-          {/* Brand Info (5 cols) */}
-          <div className="lg:col-span-5 space-y-4">
+          {/* Brand Info (4 cols) */}
+          <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xs bg-[#F5F0E6] text-[#24211B] flex items-center justify-center font-serif text-lg font-bold border border-[#B08A3E]">
                 C
@@ -39,40 +41,50 @@ export default function Footer() {
             </span>
             <ul className="space-y-2 text-[#AFA698]">
               <li>
-                <a href="#home" className="hover:text-[#F5F0E6] transition-colors">Home</a>
+                <a href="/#home" className="hover:text-[#F5F0E6] transition-colors focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">Home</a>
               </li>
               <li>
-                <a href="#business" className="hover:text-[#F5F0E6] transition-colors">Business Pillars</a>
+                <a href="/#business" className="hover:text-[#F5F0E6] transition-colors focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">Business Pillars</a>
               </li>
               <li>
-                <a href="#products" className="hover:text-[#F5F0E6] transition-colors">Machinery Catalog</a>
+                <a href="/#products" className="hover:text-[#F5F0E6] transition-colors focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">Machinery Catalog</a>
               </li>
               <li>
-                <a href="#explorer" className="hover:text-[#F5F0E6] transition-colors">3D Mechanical Rig</a>
-              </li>
-              <li>
-                <a href="#solutions" className="hover:text-[#F5F0E6] transition-colors">Turnkey Solutions</a>
+                <a href="/#solutions" className="hover:text-[#F5F0E6] transition-colors focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">Turnkey Solutions</a>
               </li>
             </ul>
           </div>
 
-          {/* Process & Case Studies (2 cols) */}
-          <div className="lg:col-span-2 space-y-3 font-mono text-xs">
+          {/* Compliance & Legal (3 cols) */}
+          <div className="lg:col-span-3 space-y-3 font-mono text-xs">
             <span className="text-[11px] uppercase tracking-widest text-[#B08A3E] font-bold">
-              OPERATIONS
+              GOVERNANCE & POLICIES
             </span>
             <ul className="space-y-2 text-[#AFA698]">
               <li>
-                <a href="#process" className="hover:text-[#F5F0E6] transition-colors">8-Stage Process</a>
+                <Link href="/privacy-policy" className="hover:text-[#F5F0E6] transition-colors focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">
+                  Privacy Policy
+                </Link>
               </li>
               <li>
-                <a href="#projects" className="hover:text-[#F5F0E6] transition-colors">Case Studies</a>
+                <Link href="/refund-policy" className="hover:text-[#F5F0E6] transition-colors focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">
+                  Refund & Cancellation Policy
+                </Link>
               </li>
               <li>
-                <a href="#contact" className="hover:text-[#F5F0E6] transition-colors">Plant Inspection</a>
+                <Link href="/cookie-policy" className="hover:text-[#F5F0E6] transition-colors focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">
+                  Cookie & Storage Policy
+                </Link>
               </li>
               <li>
-                <a href="#contact" className="hover:text-[#F5F0E6] transition-colors">Spares Depot</a>
+                <button
+                  type="button"
+                  onClick={() => triggerOpenCookiePreferences()}
+                  className="text-[#D6BC7A] hover:underline flex items-center gap-1.5 transition-colors focus-visible:ring-1 focus-visible:ring-[#D6BC7A]"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Cookie Preferences</span>
+                </button>
               </li>
             </ul>
           </div>
@@ -80,7 +92,7 @@ export default function Footer() {
           {/* Coordinates (3 cols) */}
           <div className="lg:col-span-3 space-y-3 font-mono text-xs text-[#AFA698]">
             <span className="text-[11px] uppercase tracking-widest text-[#B08A3E] font-bold">
-              SODEPUR OFFICE
+              SODEPUR HEADQUARTERS
             </span>
             <div className="space-y-2">
               <div className="flex items-start gap-2">
@@ -89,13 +101,13 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-[#D6BC7A] shrink-0" />
-                <a href={`tel:${businessData.contact.phone.replace(/\s+/g, "")}`} className="hover:text-[#F5F0E6]">
+                <a href={`tel:${businessData.contact.phone.replace(/\s+/g, "")}`} className="hover:text-[#F5F0E6] focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">
                   {businessData.contact.phone}
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#D6BC7A] shrink-0" />
-                <a href={`mailto:${businessData.contact.email}`} className="hover:text-[#F5F0E6]">
+                <a href={`mailto:${businessData.contact.email}`} className="hover:text-[#F5F0E6] focus-visible:ring-1 focus-visible:ring-[#D6BC7A]">
                   {businessData.contact.email}
                 </a>
               </div>
@@ -109,10 +121,16 @@ export default function Footer() {
           <div>
             © 2026 {businessData.name}. All industrial rights reserved.
           </div>
-          <div className="flex items-center gap-4 text-[11px]">
+          <div className="flex flex-wrap items-center gap-4 text-[11px]">
             <span>Founder: Debabrata Dey</span>
             <span>•</span>
             <span>Sodepur, Kolkata 700113</span>
+            <span>•</span>
+            <Link href="/privacy-policy" className="hover:underline">Privacy</Link>
+            <span>•</span>
+            <Link href="/refund-policy" className="hover:underline">Refunds</Link>
+            <span>•</span>
+            <Link href="/cookie-policy" className="hover:underline">Cookies</Link>
           </div>
         </div>
 

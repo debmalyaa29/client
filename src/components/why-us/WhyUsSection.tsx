@@ -12,8 +12,8 @@ export default function WhyUsSection() {
     },
     {
       num: "02",
-      title: "Guaranteed Head Rice Recovery",
-      desc: "Our customized rubber roll compounds and aspiration fluid dynamics systematically optimize whole grain yield by 2% to 4%, delivering immediate ROI within the first harvest season.",
+      title: "Targeted Head Rice Recovery",
+      desc: "Our customized rubber roll compounds and aspiration fluid dynamics are engineered to optimize whole grain yield by 2% to 4% under calibrated milling conditions, supporting strong operational ROI.",
     },
     {
       num: "03",

@@ -40,7 +40,7 @@ export default function HomePage() {
       <Navbar onOpenInquiry={handleOpenInquiry} />
 
       {/* Main Single-Story Cinematic Flow */}
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {/* 1. Hero with 3D Earth & Founder */}
         <HeroSection onOpenInquiry={handleOpenInquiry} />
 

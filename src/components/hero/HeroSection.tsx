@@ -220,7 +220,7 @@ export default function HeroSection({ onOpenInquiry }: HeroSectionProps) {
             <div className="relative w-20 h-24 sm:w-24 sm:h-28 rounded-xs overflow-hidden shrink-0 border border-[#B08A3E]/40 bg-[#EAE0CD]">
               <Image
                 src={businessData.founder.photo}
-                alt={businessData.founder.name}
+                alt={`${businessData.founder.name}, ${businessData.founder.role}`}
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 96px, 112px"

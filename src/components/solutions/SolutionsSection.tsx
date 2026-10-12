@@ -40,7 +40,7 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
         "Continuous multi-stream grain handling & parboiling integration",
         "7-chute multi-spectral optical sorting with AI defect recognition",
         "SCADA computerized plant telemetry & cloud diagnostics",
-        "Fully synchronized low-broken ratio guarantee",
+        "Fully synchronized low-broken ratio optimization",
       ],
     },
   ];
@@ -49,7 +49,7 @@ export default function SolutionsSection({ onOpenInquiry }: SolutionsSectionProp
     { icon: HardHat, step: "01", title: "Civil & Flow Blueprinting", desc: "Custom architectural CAD layouts optimizing grain gravitational flow and minimizing elevator transfer breakage." },
     { icon: Cog, step: "02", title: "Structural Steel & Piping", desc: "Heavy-gauge structural frames, anti-abrasion grain transit ducts, and precision cyclone aspiration piping." },
     { icon: Cpu, step: "03", title: "MCC & PLC Automation", desc: "Centralized industrial control desks with interlocked fail-safes preventing hopper choking and motor overloads." },
-    { icon: SlidersHorizontal, step: "04", title: "Commissioning & Tuning", desc: "On-site harvest trial runs, rubber-roll pressure calibration, and operator training to guarantee yield." },
+    { icon: SlidersHorizontal, step: "04", title: "Commissioning & Tuning", desc: "On-site harvest trial runs, rubber-roll pressure calibration, and operator training to optimize plant yield." },
   ];
 
   return (
